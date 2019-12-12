@@ -1,0 +1,101 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+
+#SYMBOL_NAME "RBI Photocell List v5b"
+// #HINT ""
+// #CATEGORY "" 
+
+#DEFAULT_NONVOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+#HELP_BEGIN
+This module works in conjunction with the RBI Zones Helper module to display a
+list of Photocells on the panel.
+
+Pulse a pcSelect to output the equipmentID (as set in the Zones XML file)
+of the selected room.
+
+The PC Names are pulled from the PC XML file. 
+
+In order to be displayed, the zone must have the following XML: <harvested>1</harvested>
+
+#HELP_END
+
+
+#USER_SIMPLSHARP_LIBRARY "RBI Single Zone v5b"
+ 
+DIGITAL_INPUT pcSelect[60];
+ANALOG_OUTPUT equipment_ID;
+STRING_OUTPUT pcNames[60];
+INTEGER i;
+INTEGER waitTime;
+INTEGER isRunning;
+
+PcListHelper zHelp;
+
+FUNCTION GetPcNames()
+{
+     for (i=1 to 60)
+	{ 
+		if (isSignalDefined(pcNames[i]))
+		{
+			pcNames[i] = zHelp.GetPcName(i);
+		}	
+   	}
+}
+
+FUNCTION FireGetPcNames()
+{
+  If(isRunning = 0)
+	{
+
+		isRunning = 1;
+		WAIT (waitTime, listChangeWait)
+		{
+			GetPcNames();
+			isRunning = 0;
+		}
+	}
+
+	ELSE
+	{
+     	RETIMEWAIT (waitTime, listChangeWait);
+	}
+}
+
+
+/* Event Handlers */
+
+	EventHandler HandleDataChange(PcListHelper Z, EventArgs args)
+	{
+
+    	FireGetPcNames();			
+	}
+
+	push pcSelect
+	{
+		equipment_ID = zHelp.GetPcEquipId(getlastmodifiedarrayindex());
+	}
+        
+/*******************************************************************************************
+  Main()
+  Uncomment and place one-time startup code here
+  (This code will get called when the system starts up)
+*******************************************************************************************/
+
+Function Main()
+{
+	WaitForInitializationComplete();
+	waitTime = 100;
+
+	WAIT(200)
+	{	
+		RegisterEvent(zHelp,PcListChange,HandleDataChange);
+		FireGetPcNames();	
+    }
+}

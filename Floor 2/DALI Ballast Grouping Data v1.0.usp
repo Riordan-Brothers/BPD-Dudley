@@ -1,0 +1,71 @@
+// #ENABLE_DYNAMIC
+#SYMBOL_NAME "DALI Ballast Grouping Data v1.0"
+// #HINT ""
+#DEFINE_CONSTANT	dTime 25
+// #CATEGORY "" 
+// #PRINT_TO_TRACE
+// #DIGITAL_EXPAND 
+// #ANALOG_SERIAL_EXPAND 
+// #OUTPUT_SHIFT 
+// #HELP_PDF_FILE ""
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+#ENCODING_ASCII
+// #ENCODING_UTF16
+// #ENCODING_INHERIT_FROM_PARENT
+// #ENCODING_INHERIT_FROM_PROGRAM
+/*
+#HELP_BEGIN
+   (add additional lines of help lines)
+#HELP_END
+*/
+
+DIGITAL_INPUT	_SKIP_,
+				Gather_Data,
+				_SKIP_,
+				Ballast_In_Group[64];
+
+DIGITAL_OUTPUT	Processing_Complete,
+				_SKIP_;
+
+ANALOG_OUTPUT	Group_Number;
+
+STRING_OUTPUT	_SKIP_,
+				Group_Ballast_List[16]; 
+
+INTEGER iGroup, iBallast;
+STRING BallastGrouping[16][255];
+
+PUSH Gather_Data
+{
+	Processing_Complete = 0;
+
+    for(iGroup=1 to 16)
+	{
+		Group_Number = iGroup - 1;
+		BallastGrouping[iGroup] = "";
+
+		delay(dTime);
+
+		for(iBallast=1 to 64)
+		{
+			if(Ballast_In_Group[iBallast])
+			{
+				BallastGrouping[iGroup] = BallastGrouping[iGroup] + itoa(iBallast-1) + ";";
+			}
+		}
+
+		Group_Ballast_List[iGroup] = BallastGrouping[iGroup];
+
+		delay(dTime);
+	}
+
+	Processing_Complete = 1;
+}
+
+FUNCTION MAIN()
+{
+	waitforinitializationcomplete();
+	Processing_Complete = 0;
+}

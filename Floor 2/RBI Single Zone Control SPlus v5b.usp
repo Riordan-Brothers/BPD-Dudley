@@ -1,0 +1,172 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+
+#SYMBOL_NAME "RBI Single Zone Control SPlus v5b"
+#CATEGORY "32" // Miscellaneous
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+#USER_SIMPLSHARP_LIBRARY "RBI Single Zone v5b"
+
+/*
+#HELP_BEGIN
+   (add additional lines of help lines)
+#HELP_END
+*/
+
+
+DIGITAL_INPUT _skip_, zoneOn, zoneOff, zoneOnOff, saveOnLvl, saveOffLvl, zoneonFB;
+ANALOG_INPUT trueFB;
+STRING_INPUT friendlyNameUpdate[255];
+
+
+DIGITAL_OUTPUT daliFB, dimmableFB, inUseFB, rgbFB, harvestedFB, harvestEnableFB, onLvlSaved, offLvlSaved, raiseFromOff, friendlyNameSaved, initialized; 
+ANALOG_OUTPUT zoneLevel, slewRate, rampTime, wattage, offLevel;
+STRING_OUTPUT friendlyName;
+
+STRING_PARAMETER zoneID[50];
+
+INTEGER lowerBound, upperBound, onLevel;
+INTEGER pulseTime; 
+
+ZoneHelper zHelp;
+
+RAMP_INFO presetRamp;
+
+/* Event Handlers */
+
+EventHandler HandleDataChange(ZoneHelper Z, ZoneEventArgs args){
+
+		initialized = 1;
+    
+		daliFB = args.zoneSettings.daliFB;
+        dimmableFB = args.zoneSettings.dimmableFB;
+        inUseFB = args.zoneSettings.inUseFB;
+		rgbFB = args.zoneSettings.rgbFB;
+		harvestedFB = args.zoneSettings.harvestedFB;
+		harvestEnableFB = args.zoneSettings.harvestEnableFB;
+        slewRate = args.zoneSettings.slewRate;
+        rampTime = args.zoneSettings.rampTime;
+		lowerBound = args.zoneSettings.lowerBound;
+		upperBound = args.zoneSettings.upperBound;
+        friendlyName = args.zoneSettings.friendlyName;
+		OnLevel = args.zoneSettings.onLevel;
+		OffLevel = args.zoneSettings.offLevel;
+		raiseFromOff = args.zoneSettings.raiseFromOff;
+
+		presetRamp.rampLowerBound = lowerBound;
+		presetRamp.rampUpperBound = upperBound;
+			
+		if (daliFB=1 || dimmableFB = 0 )
+		{
+            presetRamp.rampTransitionTime = 0; //no slew time if this is a dali, or non-dim zone			
+		}
+
+		else
+		{
+			presetRamp.rampTransitionTime = (slewrate * 100);                
+		}	 
+
+		if (harvestedFB=0)
+		{
+            harvestEnableFB = 0;
+		}				
+}
+
+//Function to set the lights to a specific level (specified in the parameter). 
+function lightsPreset(INTEGER lvl)
+{ 
+  	presetRamp.rampTargetValue = lvl; // Ramp to target level
+	createRamp(zoneLevel, presetRamp);	
+}
+
+push zoneOn //send the lights to our upper bound (usually 100%)
+{
+	lightsPreset(onLevel);
+}
+
+push zoneOff //send the lights to 0%
+{
+	lightsPreset(offLevel);
+}
+
+push zoneOnOff
+{ 
+	if(zoneOnFB)
+	{
+		lightsPreset(offLevel);
+	}
+
+   	 else
+	{
+        lightsPreset(onLevel);	
+	}
+}			
+
+push saveOnLvl 
+{
+	integer status;
+	onLevel = trueFB;
+
+    status = zHelp.SaveOnLevel(trueFB, zoneID); 
+
+	if (status=1)
+	{
+		PULSE(200, onLvlSaved);
+	}
+}
+
+push saveOffLvl 
+{
+	integer status;
+	OffLevel = trueFB;
+
+    status = zHelp.SaveOffLevel(trueFB, zoneID); 
+	
+	if (status=1)
+	{            
+		PULSE(200, offLvlSaved);
+	}
+}
+
+change friendlyNameUpdate
+{
+	integer status;
+	status = zhelp.SaveName(friendlyNameUpdate, zoneID);
+
+	if (status=1)
+	{
+		PULSE(200, friendlyNameSaved);
+	}
+}
+
+/*******************************************************************************************
+  Main()
+  Uncomment and place one-time startup code here
+  (This code will get called when the system starts up)
+*******************************************************************************************/
+
+Function Main()
+{
+	WaitForInitializationComplete();
+
+  	WAIT(500)
+	{
+		RegisterEvent(zHelp,OnDataChange,HandleDataChange);
+        zHelp.Initialize(zoneID);
+	}  
+
+	pulseTime = 25;
+	onLevel = 65535; // default value for on level, in case module isn't properly initialized
+	presetramp.rampIsAbsolute = 1;
+}
+
+
+
+

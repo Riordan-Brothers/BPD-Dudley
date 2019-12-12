@@ -1,0 +1,1091 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<file xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<zone zoneID="room01_z01">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone One</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room01_z02">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Two</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room01_z03">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Three</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room01_z04">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Four</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room01_z05">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Five</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room01_z06">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Six</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room01_z07">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Seven</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room01_z08">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Eight</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room02_z01">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone One</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room02_z02">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Two</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room02_z03">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Three</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room02_z04">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Four</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room02_z05">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Five</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room02_z06">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Six</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room02_z07">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Seven</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room02_z08">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Eight</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room03_z01">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone One</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room03_z02">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Two</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room03_z03">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Three</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room03_z04">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Four</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room03_z05">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Five</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room03_z06">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Six</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room03_z07">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Seven</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room03_z08">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Eight</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room04_z01">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone One</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room04_z02">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Two</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room04_z03">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Three</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room04_z04">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Four</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room04_z05">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Five</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room04_z06">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Six</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room04_z07">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Seven</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room04_z08">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Eight</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room05_z01">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone One</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room05_z02">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Two</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room05_z03">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Three</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room05_z04">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Four</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room05_z05">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Five</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room05_z06">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Six</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room05_z07">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Seven</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room05_z08">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Eight</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room06_z01">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone One</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room06_z02">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Two</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room06_z03">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Three</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room06_z04">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Four</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room06_z05">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Five</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room06_z06">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Six</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room06_z07">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Seven</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room06_z08">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Eight</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room07_z01">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone One</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room07_z02">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Two</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room07_z03">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Three</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room07_z04">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Four</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room07_z05">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Five</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room07_z06">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Six</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room07_z07">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Seven</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room07_z08">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Eight</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room08_z01">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone One</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room08_z02">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Two</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room08_z03">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Three</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room08_z04">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Four</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room08_z05">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Five</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room08_z06">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Six</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room08_z07">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Seven</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+	<zone zoneID="room08_z08">
+		<dali>0</dali>
+		<dimmable>1</dimmable>
+		<inUse>1</inUse>
+		<slew_rate>2</slew_rate>
+		<ramp_time>6</ramp_time>
+		<lower_bound>0</lower_bound>
+		<upper_bound>65535</upper_bound>
+		<friendly_name>Zone Eight</friendly_name>
+		<on_level>65535</on_level>
+		<off_level>0</off_level>
+		<raise_from_off>0</raise_from_off>
+		<RGB>0</RGB>
+		<harvested>0</harvested>
+		<wattage>60</wattage>
+		<harvest_enable>0</harvest_enable>
+	</zone>
+</file>

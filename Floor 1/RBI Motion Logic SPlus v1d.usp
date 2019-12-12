@@ -1,0 +1,171 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+#SYMBOL_NAME "RBI Motion Logic SPlus v1d"
+#CATEGORY "32" // Miscellaneous
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+DIGITAL_INPUT sensorIn, forceOccupancy, forceVacancy, _SKIP_, testModeHeld;
+ANALOG_INPUT timeoutSeconds, timeoutTenths, occEnableDisable, vacEnableDisable;  
+
+DIGITAL_OUTPUT occupiedHeld, occupancyEnableFB, occupancyDisableFB, vacancyEnableFB, vacancyDisableFB, occupiedP, vacantP;
+
+ANALOG_OUTPUT timeoutSecondsFB, timeoutTenthsFB;
+
+INTEGER_PARAMETER timeoutType;
+
+INTEGER occSave, vacSave, pulseTime;
+LONG_INTEGER timeoutSave;
+LONG_INTEGER trueTimeout;
+
+CHANGE occEnableDisable
+{
+	if (occEnableDisable=0) //sensor enable
+	{
+ 		occupancyEnableFB = 1; //enable sensor
+		occupancyDisableFB = 0;
+
+		if (occSave = 1)
+		{
+     		PULSE(pulseTime, occupiedP); 
+		}
+	}
+
+	else
+	{
+		occupancyEnableFB = 0; //disable sensor
+		occupancyDisableFB = 1;
+	}
+}
+
+CHANGE vacEnableDisable
+{
+ 	if (vacEnableDisable = 0)
+	{
+		vacancyEnableFB = 1; //enable sensor
+		vacancyDisableFB = 0;
+
+		if (vacSave = 1)
+		{
+     		PULSE(pulseTime, vacantP); 
+		}
+	}
+
+	else
+	{             
+		vacancyEnableFB = 0; //disable sensor
+		vacancyDisableFB = 1;
+	}
+}
+
+PUSH forceOccupancy
+{
+   CancelAllWait(); // cancel any running timers
+
+	occupiedHeld = 1; //room is occupied
+	occSave = 1;
+	vacSave = 0;
+}
+
+PUSH forceVacancy
+{
+   CancelAllWait(); // cancel any running timers
+
+	occupiedHeld = 0; //room is vacant
+	occSave = 0;
+	vacSave = 1;
+}      
+
+PUSH sensorIn
+{
+    occupiedHeld = 1; //room is occupied
+	occSave = 1;
+	vacSave = 0;
+
+ 	CancelAllWait(); // cancel any running timers
+
+    if (occupancyEnableFB = 1)
+	{
+     	PULSE (pulseTime, occupiedP);
+	}
+}
+
+RELEASE sensorIn
+{
+ 	WAIT(trueTimeout, vacWait)
+	{
+        occupiedHeld = 0; //room is now vacant
+		occSave = 0;
+		vacSave = 1;
+
+    	if (vacancyEnableFB = 1)
+		{
+     		PULSE (pulseTime, vacantP);
+		}
+	}
+}
+
+PUSH testModeHeld //set timeout to 0 seconds for testing
+{
+    timeoutSave = trueTimeout;
+	trueTimeout = 0;
+	timeoutSecondsFB = 0;
+}
+
+RELEASE testModeHeld
+{
+	trueTimeout = timeoutSave;
+
+	if (TimeoutType = 0)
+	{
+		timeoutSecondsFB = timeoutSeconds;
+	}
+
+	else if (TimeoutType = 1)
+	{ 
+     	timeoutTenthsFB = timeoutTenths;
+	}
+
+}
+
+
+CHANGE timeoutSeconds
+{
+	if (timeoutType = 0 && timeoutSeconds > 0) //timeout is in seconds
+	{
+      trueTimeout = (timeoutSeconds * 100); //convert 1s to .01s
+      timeoutSecondsFB = timeoutSeconds;
+	}
+}
+
+CHANGE timeoutTenths
+{
+    if (timeoutType = 1 && timeoutTenths > 0) //timeout is in .1 seconds
+	{
+      trueTimeout = (timeoutTenths * 10); //convert .1s to .01s
+      timeoutTenthsFB = timeoutTenths;
+	}
+}
+
+Function Main ()
+{
+
+	WaitForInitializationComplete();
+    pulseTime = 25;
+
+	if (timeoutType = 0) //timeout is in seconds
+	{
+      trueTimeout = timeoutSeconds *100; //convert 1s to .01s
+	}
+
+	else
+	{
+		trueTimeout = timeoutTenths * 10; //convert .1s to .01s
+	}
+}

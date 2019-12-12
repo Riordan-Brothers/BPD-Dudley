@@ -1,0 +1,472 @@
+[
+Version=1
+]
+[
+ObjTp=FSgntr
+Sgntr=UserMacro
+RelVrs=2.05.22
+IntStrVrs=2
+MinSMWVrs=0
+MinTIOVrs=0
+SavedBy=SMW2.05.22
+]
+[
+ObjTp=Hd
+S0Nd=1
+S1Nd=2
+SLNd=3
+PrNm=toggle v3.1.umc
+DbVr=16.3.4
+Incl=362,378,380,405,407,408,409,478,522,537,554,586,590,611,624,647,670,
+McNm=btn_model_toggle_v3_1
+SmVr=310
+DvVr=310
+TpN1=1
+TpN2=2
+TpN3=3
+TpN4=4
+TpN5=5
+DT=(Logic)
+Cmn1=Toggle Button v3.0\\--------------------\\\\This module provides||1
+Cmn2="intelligent" toggle button functionality. It\\allows a single button||1
+Cmn3=to be used to trigger alternating actions,\\and also be synchronized||1
+Cmn4=via external logic.\\\\A typical application for this module is||1
+Cmn5=in lighting control. Imagine\\a single button used for turning a||1
+Cmn6=light on and off. Each time the \\button is pressed, the light alternates||1
+Cmn7=between some "on" level and\\0%. However, if the light is controlled||1
+Cmn8=in some manner other than \\pressing this button (e.g. a "Whole||1
+Cmn9=House Off" button), this button\\can be smart enough to remain synchronized||1
+Cmn10=to the state of the light and\\thus send the proper action next||1
+Cmn11=time the button is pressed. This\\prevents a user from ever pressing||1
+Cmn12=the button and not seeing anything\\happen. NOTE: determining the||1
+Cmn13="right thing" for the button to do is the\\job of the programmer.
+Cmn14=||1Some people might consider that the button should\\turn the light||1
+Cmn15=off whenever it is on, while others might decide that it\\should||1
+Cmn16=only turn off if the lights are currently at the "on level." See\\
+Cmn17=the input/output descriptions below for information regarding how||1
+Cmn18=the\\module decides which action to execute.\\\\One nice feature||1
+Cmn19=of this module is that the button can never get stuck\\in one state||1
+Cmn20=or another. If the new_button_state input does not change\\its value||1
+Cmn21=after a button press, the button will simply toggle to the alternate\\
+Cmn22=state on the next press. This means that if you do not need to have||1
+Cmn23=a button\\keep synchronized with a device's state, you can set the||1
+Cmn24=new_button_state \\input to 0 and ignore it.\\\\This module differs||1
+Cmn25=from v2.0.x in that it adds two inputs which\\indicate whether a||1
+Cmn26=given action is "busy" or not. This is handy to \\resend the same||1
+Cmn27=command rather than toggling if the initial command\\is not finished||1
+Cmn28=executing. The typical application for this is a lighting\\preset,||1
+Cmn29=where pressing the button once will cause a lighting fade, but\\
+Cmn30=pressing the button a second time while the lights are still fading||1
+Cmn31=\\will cause the lights to jump immediately to their final values.
+Cmn32=\\\\Setting the "busy" inputs to 0 will result in behavior identical||1
+Cmn33=to v2.0.1.\\\\\\INPUT DESCRIPTIONS\\==================\\\\press_in||1
+Cmn34=||8(D)  Connect this input to the button. When high, this\\
+Cmn35=||Finput will cause the first_press or second_press\\
+Cmn36=||Foutputs to go high, and stay high. When this||1
+Cmn37=input\\                      goes low, those outputs will go low.
+Cmn38=\\new_button_state (D)  This input can be used to synchronize the||1
+Cmn39=toggle\\                      to the device(s) it is controlling.
+Cmn40=||1If this signal\\                      changes state while press_in||1
+Cmn41=is low, then the \\                      current state of the button||1
+Cmn42=will be changed to \\                      match. That is, if new_button_state||1
+Cmn43=goes high,\\                      current_button_state will go high||1
+Cmn44=as well. If it\\                      goes low, current_button_state||1
+Cmn45=will go low. THIS\\                      INPUT IS IGNORED WHENEVER||1
+Cmn46=THE press_in INPUT IS HIGH.\\first_press_busy (D)  Indicates that||1
+Cmn47=the actions triggered by the first button\\||E
+Cmn48=||1press are still in progress.\\second_press_busy (D) Indicates that||1
+Cmn49=the actions triggered by the second button\\||D
+Cmn50=||2press are still in progress.\\\\\\INPUT DESCRIPTIONS\\==================\\
+Cmn51=\\first_press      (D)  This output goes high when the press_input||1
+Cmn52=goes high\\                      and the current_button_state output||1
+Cmn53=is LOW. It will go low\\                      when press_in goes||1
+Cmn54=low.\\second_press     (D)  This output goes high when the press_input||1
+Cmn55=goes high\\                      and the current_button_state output||1
+Cmn56=is HIGH. It will go low\\                      when press_in goes||1
+Cmn57=low.\\current_button_state (D) This input shows the current state||1
+Cmn58=of the button. It\\                         can be used to provide||1
+Cmn59=simple toggling feedback to the\\                         button.
+Cmn60=\\\\REVISION HISTORY\\================\\v1.0 - initial release (no||1
+Cmn61=synchronization logic)\\\\v2.0 - added synchronization logic to||1
+Cmn62=make it "intelligent"\\\\v2.0.1 - fixed bug where button would not||1
+Cmn63=always be in the proper state\\         on start-up.\\\\v3.0 - added||1
+Cmn64="busy" inputs to allow for re-sending of the same command on\\||2
+Cmn65=||5a press.\\\\v3.1 - modified the behavior to determine when||1
+Cmn66=to reissue the same press.
+]
+[
+ObjTp=Bk
+Nm1=\
+Sx1=0
+Sy1=0
+Mx1=0
+]
+[
+ObjTp=Symbol
+Name=toggle v3.1
+Code=1
+SmplCName=toggle v3.1.umc
+Smpl-C=3
+CompilerTimePrecision=Single_Or_Double_Precision
+Exclusions=1,19,20,21,88,89,167,168,179,216,225,248,249,266,302,305,
+SMWRev=0
+TIORev=0
+HelpID=1055
+DT=(Logic)
+APg=0
+NumFixedInputs=4
+NumFixedOutputs=3
+MinVariableInputs=0
+MinVariableInputsList2=0
+MinVariableInputsList3=0
+MinVariableOutputs=0
+MinVariableOutputsList2=0
+MinVariableOutputsList3=0
+MinVariableParams=0
+SymbolTree=32
+ParamSigType1=Time|Percent|Constant|String|FileName|HexAddress|Any
+InputCue1=press_in
+InputCue2=new_button_state
+InputCue3=first_press_busy
+InputCue4=second_press_busy
+OutputCue1=first_press
+OutputCue2=second_press
+OutputCue3=current_button_state
+FileName=toggle v3.1.umc
+]
+[
+ObjTp=Sm
+H=1
+SmC=157
+Nm=Central Control Modules
+CF=2
+n1I=1
+n1O=1
+mI=1
+mO=1
+tO=1
+mP=1
+P1=
+]
+[
+ObjTp=Sm
+H=2
+SmC=157
+Nm=Network Modules
+CF=2
+n1I=1
+n1O=1
+mI=1
+mO=1
+tO=1
+mP=1
+P1=
+]
+[
+ObjTp=Sm
+H=3
+SmC=157
+Nm=Ethernet
+CF=2
+n1I=1
+n1O=1
+mI=1
+mO=1
+tO=1
+mP=1
+P1=
+]
+[
+ObjTp=Sm
+H=4
+SmC=156
+Nm=Logic
+CF=2
+mC=9
+C1=14
+C2=9
+C3=7
+C4=12
+C5=13
+C6=8
+C7=15
+C8=10
+C9=17
+]
+[
+ObjTp=Sm
+H=5
+SmC=157
+Nm=DefineArguments
+CF=2
+n1I=1
+n1O=1
+mC=1
+C1=6
+mI=1
+mO=1
+tO=1
+mP=1
+P1=
+]
+[
+ObjTp=Sm
+H=6
+SmC=55
+PrH=5
+CF=2
+n1I=4
+n1O=3
+mI=4
+I1=8
+I2=5
+I3=16
+I4=19
+mO=3
+tO=3
+O1=15
+O2=14
+O3=11
+mP=1
+P1=
+]
+[
+ObjTp=Sm
+H=7
+SmC=13
+PrH=4
+CF=2
+n1I=3
+n1O=2
+Cmn1=single-wave pulse on button press\\
+mI=3
+I2=9
+I3=8
+mO=2
+tO=2
+O1=9
+]
+[
+ObjTp=Sm
+H=8
+SmC=13
+PrH=4
+CF=2
+n1I=3
+n1O=2
+Cmn1=maintain current button state\\
+mI=3
+I1=4
+I2=10
+I3=17
+mO=2
+tO=2
+O1=11
+O2=12
+]
+[
+ObjTp=Sm
+H=9
+SmC=9
+PrH=4
+CF=2
+n1I=3
+n1O=2
+Cmn1=pulse on falling edge of "on state"\\
+mI=3
+I1=1
+I2=7
+mO=2
+tO=2
+O1=6
+mP=1
+P1=.01s
+]
+[
+ObjTp=Sm
+H=10
+SmC=20
+PrH=4
+CF=2
+n1I=3
+n1O=2
+Cmn1=generate output press commands\\
+mI=3
+I1=13
+I2=11
+I3=12
+mO=2
+tO=2
+O1=15
+O2=14
+]
+[
+ObjTp=Sm
+H=12
+SmC=13
+PrH=4
+CF=2
+n1I=3
+n1O=2
+Cmn1=single-wave pulse on rising edge of "on state"\\
+mI=3
+I2=4
+I3=7
+mO=2
+tO=2
+O1=4
+]
+[
+ObjTp=Sm
+H=13
+SmC=13
+PrH=4
+CF=2
+n1I=3
+n1O=2
+Cmn1=single-wave pulse on falling edge of "on state"\\
+mI=3
+I2=10
+I3=6
+mO=2
+tO=2
+O1=10
+]
+[
+ObjTp=Sm
+H=14
+SmC=28
+PrH=4
+CF=2
+n1I=4
+n1O=1
+Cmn1=pass the state feedback only when button is not pressed\\
+mI=4
+I1=8
+I2=16
+I3=19
+I4=5
+mO=1
+tO=1
+O1=7
+mP=5
+P1=L,L,H,X,X
+P2=L,L,X,H,X
+P3=L,L,X,X,H
+P4=L,H,X,X,X
+P5=L,H,X,X,X
+]
+[
+ObjTp=Sm
+H=15
+SmC=408
+PrH=4
+CF=2
+n1I=1
+n1O=1
+mI=1
+I1=8
+mO=1
+tO=1
+O1=13
+mP=1
+P1=3d
+]
+[
+ObjTp=Sm
+H=17
+SmC=28
+PrH=4
+CF=2
+n1I=4
+n1O=1
+mI=4
+I1=9
+I2=11
+I3=16
+I4=19
+mO=1
+tO=1
+O1=17
+mP=5
+P1=H,L,X,H,L,X
+P2=H,H,H,L,L,L
+P3=L,X,H,X,X,X
+P4=X,X,X,L,X,H
+P5=H,L,L,H,L,L
+]
+[
+ObjTp=Sg
+H=4
+Nm=set_toggle
+]
+[
+ObjTp=Sg
+H=5
+Nm=new_button_state
+]
+[
+ObjTp=Sg
+H=6
+Nm=new_button_state_ok_p*
+]
+[
+ObjTp=Sg
+H=7
+Nm=new_button_state_ok
+]
+[
+ObjTp=Sg
+H=8
+Nm=press_in
+]
+[
+ObjTp=Sg
+H=9
+Nm=press_in_swp
+]
+[
+ObjTp=Sg
+H=10
+Nm=reset_toggle
+]
+[
+ObjTp=Sg
+H=11
+Nm=current_button_state
+]
+[
+ObjTp=Sg
+H=12
+Nm=current_button_state*
+]
+[
+ObjTp=Sg
+H=13
+Nm=press_in_d
+]
+[
+ObjTp=Sg
+H=14
+Nm=second_press
+]
+[
+ObjTp=Sg
+H=15
+Nm=first_press
+]
+[
+ObjTp=Sg
+H=16
+Nm=first_press_busy
+]
+[
+ObjTp=Sg
+H=17
+Nm=press_in_ok
+]
+[
+ObjTp=Sg
+H=19
+Nm=second_press_busy
+]

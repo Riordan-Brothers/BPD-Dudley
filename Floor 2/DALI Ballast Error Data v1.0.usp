@@ -1,0 +1,38 @@
+#SYMBOL_NAME "DALI Ballast Error Data v1.0"
+#DEFINE_CONSTANT 	maxBallasts 64
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+#ENCODING_ASCII
+/*
+#HELP_BEGIN
+   (add additional lines of help lines)
+#HELP_END
+*/
+
+DIGITAL_INPUT	ballastError[maxBallasts];
+
+STRING_OUTPUT	_SKIP_, errorList$; 
+
+INTEGER iList; 
+
+CHANGE ballastError
+{ 
+	string tempList$[255];
+
+	for(iList=0 to (maxBallasts-1)) //iterate through ballasts, indexed to 0
+	{
+		if (ballastError[iList+1] = 1)
+		{
+         	tempList$ = templist$ + itoa(iList)+ ";";
+		}
+	}
+
+	errorList$ = tempList$;
+}
+
+FUNCTION MAIN()
+{
+	waitforinitializationcomplete();
+}

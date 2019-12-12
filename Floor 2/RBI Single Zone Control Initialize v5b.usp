@@ -1,0 +1,149 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+#SYMBOL_NAME "RBI Single Zone Control Initialize Function v5b"
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+#HELP_BEGIN
+ This module reads in an XML file stored on the processor 
+to set up the configuration of lighting zones. The file is 
+read in automatically on a program reset. 
+
+One instance of this module is required if you are using 
+the RBI Single Zone Control v5b, RBI Photocell List v5b, RBI 
+PC Control v5b, and RBI PC Equip v5b modules. 
+
+Inputs: 
+
+initialize:	Pulse to re-read the XML file and update settings.
+
+make_blank_file:	Pulse this optional symbol to save a blank 
+	settings file. The file will be saved to the processor in 
+	the location indicated by filename. The filename will be 
+	the same name as the XML filename, but with "-blank" 
+	appended to the end.
+
+Outputs: 
+
+intialized_fb: This output will be held high if the XML file 
+	initializes correctly
+
+error_fb: This output will be held high if the XML file fails 
+	to initialize. 
+
+initialize_status: This signed value indicates the current 
+	status of the XML file. The values are as follows:
+
+	1 = Success
+	-1 = Unknown Error
+	-2 = No XML file on processor
+	-3 = The XML file is blank
+	-4 = There is a XML error
+	-5 = The file is locked for editing
+
+initialize_status_message: This string indicates the current status 
+	of the XML file.
+
+Parameters:
+
+filename: The location of the settings file on the processor, plus 
+	the filename. This defaults to \\USERS\\zones.xml.
+
+#HELP_END
+
+
+#USER_SIMPLSHARP_LIBRARY "RBI Single Zone v5b"
+
+
+DIGITAL_INPUT initialize, make_blank_file;
+DIGITAL_OUTPUT _skip_, initialized_fb, error_fb, _skip_;
+ANALOG_OUTPUT initialize_status;
+STRING_OUTPUT initialize_status_message;
+
+STRING_PARAMETER filename[100];
+
+#BEGIN_PARAMETER_PROPERTIES filename
+	propValidUnits = unitString;
+	propDefaultValue = "\\USER\\zones.xml";
+#END_PARAMETER_PROPERTIES
+
+SIGNED_INTEGER status;
+
+FUNCTION initializeXML()
+{
+ 	status = ZoneControlFileOps.parseXML(filename);
+	initialize_status = status;
+
+	cswitch (status)
+		{
+         case(1): //success
+			{			
+				error_fb = 0;
+				initialized_fb = 1;
+				initialize_status_message = "A-Ok";
+				break;
+			}
+		case(-1): //unknown error
+			{
+				error_fb = 1;
+				initialized_fb = 0;
+				initialize_status_message = "Unknown Error";
+				break;
+			}
+		case(-2): //XML file is missing
+			{
+				error_fb = 1;
+				initialized_fb = 0;
+				initialize_status_message = "Missing Zones XML File";
+				break;
+			}
+		case(-3): //XML file is blank
+			{
+				error_fb = 1;
+				initialized_fb = 0;
+				initialize_status_message = "Blank Zones XML File";
+				break;
+			}
+
+		case(-4): //XML error
+			{
+				error_fb = 1;
+				initialized_fb = 0;
+				initialize_status_message = "XML Error in Zones File";
+				break;
+			}
+		}
+}
+
+push initialize
+{
+   InitializeXML();
+}
+
+push make_blank_file
+{
+    ZoneControlFileOps.MakeBlankFile();
+}
+
+/*******************************************************************************************
+  Main()
+  Uncomment and place one-time startup code here
+  (This code will get called when the system starts up)
+*******************************************************************************************/
+
+Function Main()
+{
+	WaitForInitializationComplete();
+
+	WAIT(100)
+	{
+		InitializeXML();
+	}
+    
+}

@@ -1,0 +1,176 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+
+#SYMBOL_NAME "RBI Room Helper SPlus v1c"
+// #HINT ""
+// #CATEGORY "" 
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+/*
+#HELP_BEGIN
+   (add additional lines of help lines)
+#HELP_END
+*/
+
+
+#USER_SIMPLSHARP_LIBRARY "RBI Room Helper v1c"
+
+ANALOG_INPUT num_zones_in, num_presets_in, num_shades_in, timeout_in;
+STRING_INPUT roomNameUpdate[255], allOffNameUpdate[255], allOnNameUpdate[255], presetNameUpdate[8,8][255];
+
+DIGITAL_OUTPUT usesPresets, hasShades, roomInitialized, genDigital[8]; 
+ANALOG_OUTPUT numZones, numShades, numPresets, timeout_out, occ_mode, vac_mode;
+STRING_OUTPUT roomName, allOffName, allOnName;
+
+ANALOG_OUTPUT genAnalog[8];
+STRING_OUTPUT presetName[8], genSerial[8];
+
+STRING_PARAMETER roomID[50]; 
+INTEGER i;
+   
+SIGNED_INTEGER status;
+
+RoomHelper rHelp;
+
+FUNCTION Initialize()
+{
+	status = rHelp.Initialize(roomID);
+	if (status > 0)
+		{
+			roomInitialized = 1;
+		}
+}
+	
+/* Event Handlers */
+
+EventHandler HandleDataChange(RoomHelper R, RoomEventArgs args){
+    
+	roomInitialized = 1; //room is now initialized
+
+	usesPresets = args.roomSettings.usesPresets;
+	numZones = args.roomSettings.numZones;
+	numPresets = args.roomSettings.numPresets;
+	hasShades = args.roomSettings.hasShades;
+	numShades = args.roomSettings.numShades;
+	roomName = args.roomSettings.roomName;
+   	allOffName = args.roomSettings.allOffName;
+	allOnName = args.roomSettings.allOnName;
+
+	timeout_out = args.roomSettings.occTimeout;
+	occ_mode = args.roomSettings.occMode;
+	vac_mode = args.roomSettings.vacMode;	                  
+
+	for (i = 1 TO 8)
+	{
+		presetName[i] = args.roomSettings.presetName[i-1];
+	}
+
+		for (i = 1 TO 8)
+	{
+		genDigital[i] = args.roomSettings.genericDigital[i-1];
+	}
+           	for (i = 1 TO 8)
+	{
+		genAnalog[i] = args.roomSettings.genericAnalog[i-1];
+	}
+
+	for (i = 1 TO 8)
+	{
+		genSerial[i] = args.roomSettings.genericSerial[i-1];
+	} 
+}
+
+CHANGE num_zones_in
+{
+	if (num_zones_in >0) //don't null it out
+	{
+		rHelp.UpdateAnalog("num_zones", num_zones_in);
+	}
+}
+
+CHANGE num_presets_in
+{
+	if (num_presets_in >0) //don't null it out
+	{
+		rHelp.UpdateAnalog("num_presets", num_presets_in);
+	}
+}
+
+CHANGE num_shades_in
+{
+	if (num_shades_in >0) //don't null it out
+	{
+		rHelp.UpdateAnalog("num_shades", num_shades_in);
+	}
+}
+
+
+CHANGE timeout_in
+{
+	if (timeout_in >0) //don't null it out
+	{
+		rHelp.UpdateAnalog("occ_timeout", timeout_in);
+	}
+}
+
+CHANGE roomNameUpdate
+{
+	if (roomNameUpdate <> rHelp.GetName("room_name", 0)) //make sure this is a new value
+	{
+     	rHelp.UpdateSerial("room_name", roomNameUpdate);
+	}
+}
+
+CHANGE allOffNameUpdate
+{
+    if (allOffNameUpdate <> rHelp.GetName("all_off_name", 0)) //make sure this is a new value
+	{
+     	rHelp.UpdateSerial("all_off_name", allOffNameUpdate);
+	}
+}
+
+CHANGE allOnNameUpdate
+{
+    if (allOnNameUpdate <> rHelp.GetName("all_on_name", 0)) //make sure this is a new value
+	{
+     	rHelp.UpdateSerial("all_on_name", allOnNameUpdate);
+	}
+}
+
+CHANGE presetNameUpdate
+{
+	integer i;
+	string attribute[50];
+
+	i = GetLastModifiedArrayIndex();
+
+	if (presetNameUpdate[i] <> rHelp.GetName("preset", i-1)) //make sure this is a new value
+	{
+		MAKESTRING(attribute, "preset%02u_name", i);	
+	    rHelp.UpdateSerial(attribute, presetNameUpdate[i]);
+	}
+}
+
+/*******************************************************************************************
+  Main()
+  Uncomment and place one-time startup code here
+  (This code will get called when the system starts up)
+*******************************************************************************************/
+
+Function Main()
+{
+	WaitForInitializationComplete();
+
+	WAIT(500)
+	{	
+		RegisterEvent(rHelp,OnDataChange,HandleDataChange);
+		Initialize();		
+    }
+}

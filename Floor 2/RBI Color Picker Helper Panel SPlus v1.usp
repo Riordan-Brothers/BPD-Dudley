@@ -1,0 +1,118 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+
+#SYMBOL_NAME "RBI Color Picker Helper Panel SPlus v1"
+// #HINT ""
+// #CATEGORY "" 
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+/*
+#HELP_BEGIN
+   (add additional lines of help lines)
+#HELP_END
+*/
+
+
+DIGITAL_INPUT Update, _skip_, SelectRecent[6];
+ANALOG_INPUT 	_skip_, PanelIn[3];
+
+ANALOG_OUTPUT 	PanelOut[3], _skip_,
+				FirstOut[3], _skip_, 
+				SecondOut[3], _skip_,
+				ThirdOut[3], _skip_, 
+				FourthOut[3], _skip_,
+				FifthOut[3], _skip_, 
+				SixthOut[3];
+
+
+
+INTEGER SavedLevels[6][3];
+
+
+
+PUSH Update
+{
+
+	integer i;
+
+		IF ((PanelIn[1]<>FirstOut[1])||(PanelIn[2]<>FirstOut[2])||(PanelIn[3]<>FirstOut[3])) //all values are new
+		{
+                
+
+			for (i = 1 to 3)
+			{
+				SixthOut[i]=FifthOut[i];
+				SavedLevels[6][i]=SixthOut[i];
+			}
+
+			for (i = 1 to 3)
+			{
+				FifthOut[i]=FourthOut[i];
+				SavedLevels[5][i]=FifthOut[i];
+	
+			}
+
+
+			for (i = 1 to 3)
+			{
+				FourthOut[i]=ThirdOut[i];
+				SavedLevels[4][i]=FourthOut[i];
+			}
+
+
+			for (i = 1 to 3)
+			{
+				ThirdOut[i]=SecondOut[i];
+				SavedLevels[3][i]=ThirdOut[i];
+			}
+
+			for (i = 1 to 3)
+			{
+				SecondOut[i]=FirstOut[i];
+				SavedLevels[2][i]=SecondOut[i];
+			}
+
+
+			for (i = 1 to 3)
+			{
+				FirstOut[i]=PanelIn[i];
+				SavedLevels[1][i]=FirstOut[i];
+			}
+
+   
+		}
+}
+
+PUSH SelectRecent
+{
+
+	Integer i;
+	Integer j;
+
+	i = GetLastModifiedArrayIndex();
+
+
+	for (j = 1 to 3)
+	{
+		PanelOut[j] = SavedLevels[i][j];
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

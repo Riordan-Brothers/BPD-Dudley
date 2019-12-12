@@ -1,0 +1,186 @@
+/*
+Kestrel Partners
+Bill Heil
+Comments:
+	10-JUL-2010	Init version
+*/
+#SYMBOL_NAME "Simpl+ Program Comments and Uptime"
+// #DEFINE_CONSTANT
+// #DEFAULT_VOLATILE
+#DEFAULT_NONVOLATILE
+
+#HELP_BEGIN
+   Connect con_rx$ and con_tx$ to console symbol
+   Dependent on Crestron "PROGCOMMENTS" command output format.
+   If the format of the output changes with subsequent CUZ releases, this 
+   module may no longer work correctly.
+   trig - pulse when you can to look up system info
+   15 output strings are parsed from the PROGCOMMENTS command  
+	
+
+	Edited by Hope Roth to include uptime and to fix formatting to make this 3-series compatible
+
+#HELP_END
+
+/************* I/O **************/
+DIGITAL_INPUT trig;
+// ANALOG_INPUT 
+// STRING_INPUT 
+BUFFER_INPUT con_rx$[2048];
+STRING_OUTPUT con_tx$;
+// DIGITAL_OUTPUT 
+// ANALOG_OUTPUT 
+STRING_OUTPUT 	pgm_boot_dir$,
+				source_file$,
+				program_file$,
+				system_name$,
+				programmer$,
+				compiled_on$,
+				compiler_rev$,
+				SYMLIB_rev$,
+				IOLIB_rev$,
+				IOPCFG$,
+				crestronDB$,
+				source_env$,
+				target_rack$,
+				config_rev$,
+				include4$,
+				uptime$,
+				system_started$,
+				prog_uptime$,
+				prog_started$;
+                            
+
+INTEGER_PARAMETER ProgSlot;
+
+#BEGIN_PARAMETER_PROPERTIES ProgSlot
+propValidUnits = unitDecimal;
+propBounds = 1d,10d;
+propDefaultValue = 1d;
+propShortDescription= "Program Slot Number";
+
+#END_PARAMETER_PROPERTIES
+
+
+/*************VARIABLES *********/
+VOLATILE INTEGER	start_pos[14], str_len[14], i;
+VOLATILE INTEGER	start_pos_up[2], str_len_up[2];
+VOLATILE INTEGER	start_pos_prog[2], str_len_prog[2];
+VOLATILE STRING  	parse$[14][24];
+VOLATILE STRING  	parse_up$[2][50];
+VOLATILE STRING  	parse_prog$[2][50];
+
+/*************EVENTS*************/
+Function parse_comments()
+{
+	for (i = 0 to 14) 
+	{
+		start_pos[i] = find(parse$[i], con_rx$)+ len(parse$[i]);
+		str_len[i] = find("\n",mid(con_rx$,start_pos[i],len(con_rx$)-start_pos[i]-3))-1;
+	}
+
+	Pgm_Boot_Dir$=	mid(con_rx$, start_pos[0], str_len[0]);
+	Source_File$=	mid(con_rx$, start_pos[1], str_len[1]);
+	Program_File$=	mid(con_rx$, start_pos[2], str_len[2]);
+	System_Name$=	mid(con_rx$, start_pos[3], str_len[3]);
+	Programmer$=	mid(con_rx$, start_pos[4], str_len[4]);
+	Compiled_on$=	mid(con_rx$, start_pos[5], str_len[5]);
+	Compiler_rev$=	mid(con_rx$, start_pos[6], str_len[6]);
+	SYMLIB_rev$=	mid(con_rx$, start_pos[7], str_len[7]);
+	IOLIB_rev$=		mid(con_rx$, start_pos[8], str_len[8]);
+	IOPCFG$=		mid(con_rx$, start_pos[9], str_len[9]);
+	CrestronDB$=	mid(con_rx$, start_pos[10], str_len[10]);
+	Source_Env$=	mid(con_rx$, start_pos[11], str_len[11]);
+	Target_Rack$=	mid(con_rx$, start_pos[12], str_len[12]);
+	Config_Rev$=	mid(con_rx$, start_pos[13], str_len[13]);
+	include4$=		mid(con_rx$, start_pos[14], str_len[14]);
+}
+
+
+Function parse_uptime()
+{
+	for (i = 0 to 2)
+	{
+		start_pos_up[i] = find(parse_up$[i], con_rx$)+ len(parse_up$[i]);
+		str_len_up[i] = find("\n",mid(con_rx$,start_pos_up[i],len(con_rx$)-start_pos_up[i]-3))-1;     
+    }
+
+    uptime$ = mid(con_rx$, start_pos_up[0], str_len_up[0]);
+	system_started$ = mid(con_rx$, start_pos_up[1], str_len_up[1]);
+
+
+}
+
+Function parse_proguptime()
+{           
+
+	for (i = 0 to 2)
+
+	{
+		start_pos_prog[i] = find(parse_prog$[i], con_rx$)+ len(parse_prog$[i]);
+		str_len_prog[i] = find("\n",mid(con_rx$,start_pos_prog[i],len(con_rx$)-start_pos_prog[i]-3))-1;
+        
+	}
+
+    prog_uptime$ = mid(con_rx$, start_pos_prog[0], str_len_prog[0]);
+	prog_started$ = mid(con_rx$, start_pos_prog[1], str_len_prog[1]);
+
+
+
+}
+
+
+
+PUSH trig
+{
+	clearbuffer (con_rx$);  	// empty console buffer first 
+	makestring(Con_tx$, "PROGCOMMENTS:%u\n", ProgSlot);
+	delay(100);
+	parse_comments();
+
+	clearbuffer (con_rx$); //intermediate clear
+
+    Con_tx$ = "UPTIME\n"; 	delay (100);
+	parse_uptime();
+
+	clearbuffer (con_rx$); //intermediate clear
+
+    makestring(Con_tx$, "PROGUPTIME:%u\n", ProgSlot);	
+	Parse_proguptime();
+
+	clearbuffer (con_rx$);		// clean up when done
+}
+
+/**********STARTUP************/
+Function Main()
+{
+	WaitforInitializationComplete();
+
+	parse$[0]  = "Program Boot Directory: ";
+	parse$[1]  = "Source File:  ";
+	parse$[2]  = "Program File: ";
+	parse$[3]  = "System Name:  ";
+	parse$[4]  = "Programmer:   ";
+	parse$[5]  = "Compiled On:  ";
+	parse$[6]  = "Compiler Rev: ";
+	parse$[7]  = "SYMLIB Rev:   ";
+	parse$[8]  = "IOLIB Rev:    ";
+	parse$[9]  = "IOPCFG Rev:   ";
+	parse$[10] = "CrestronDB:   ";
+	parse$[11] = "Source Env:   ";
+	parse$[12] = "Target Rack:  ";
+	parse$[13] = "Config Rev:   ";
+	parse$[14] = "Include4.dat: ";
+                                          	
+	parse_up$[0] = "The system has been running for ";
+	parse_up$[1] = "The system last started on: ";
+
+
+	parse_prog$[0] = "The program has been running for ";
+	parse_prog$[1] = "The program last started on: ";
+
+}
+
+
+
+

@@ -1,0 +1,76 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+
+#SYMBOL_NAME "RBI PC Helper SPlus v5b"
+// #HINT ""
+// #CATEGORY "" 
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+#USER_SIMPLSHARP_LIBRARY "RBI Single Zone v5b"
+
+/*
+#HELP_BEGIN
+   (add additional lines of help lines)
+#HELP_END
+*/
+ 
+
+DIGITAL_INPUT harvest_enable, harvest_disable;                       
+
+DIGITAL_OUTPUT dali_FB;
+DIGITAL_OUTPUT harvest_enable_FB;
+DIGITAL_OUTPUT raise_from_off_FB;
+STRING_OUTPUT PC_Name;
+
+STRING_PARAMETER zoneID[50];
+
+ZoneHelper zHelp;
+
+/* Event Handlers */
+
+EventHandler HandleDataChange(ZoneHelper Z, ZoneEventArgs args)
+{
+    
+	harvest_enable_FB = args.zoneSettings.harvestedFB;
+	PC_Name = args.zoneSettings.pcName;
+	raise_from_off_FB = args.zoneSettings.raiseFromOff;
+	dali_FB = args.zoneSettings.daliFB;
+
+}
+
+
+PUSH harvest_enable
+{
+	zHelp.PhotocellEnableDisable(1, zoneID); //send 1 to enable
+}
+
+PUSH harvest_disable
+{
+       zHelp.PhotocellEnableDisable(0, zoneID); //send 0 to disable
+}
+
+
+/*******************************************************************************************
+  Main()
+  Uncomment and place one-time startup code here
+  (This code will get called when the system starts up)
+*******************************************************************************************/
+
+Function Main()
+{
+	WaitForInitializationComplete();
+	zHelp.Initialize(zoneID);
+	RegisterEvent(zHelp,OnDataChange,HandleDataChange);
+
+}
+
+
+
+

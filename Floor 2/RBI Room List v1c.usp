@@ -1,0 +1,102 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+
+#SYMBOL_NAME "RBI Room List v1c"
+// #HINT ""
+// #CATEGORY "" 
+
+#DEFAULT_NONVOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+#HELP_BEGIN
+This module works in conjunction with the RBI Rooms Helper module to display a
+list of rooms on the panel.
+
+Pulse a roomSelect to output the equipmentID (as set in the Rooms XML file)
+of the selected room.
+
+The Room Names are pulled from the Rooms XML file, as is the ordering of the list
+
+
+#HELP_END
+
+
+
+#USER_SIMPLSHARP_LIBRARY "RBI Room Helper v1c"
+ 
+DIGITAL_INPUT roomSelect[60];
+ANALOG_OUTPUT equipment_ID;
+STRING_OUTPUT roomNames[60];
+INTEGER i;
+INTEGER waitTime;
+INTEGER isRunning;
+
+
+
+RoomListHelper rHelp;
+
+FUNCTION GetRoomNames()
+{
+     for (i=1 to 60)
+	{ 
+		if (isSignalDefined(roomNames[i]))
+		{
+			roomNames[i] = rHelp.GetRoomName(i);
+		}	
+   	}
+}
+
+FUNCTION FireGetRoomNames()
+{
+  If(isRunning = 0)
+	{
+
+		isRunning = 1;
+		WAIT (waitTime, listChangeWait)
+		{
+			GetRoomNames();
+			isRunning = 0;
+		}
+	}
+
+	ELSE
+	{
+     	RETIMEWAIT (waitTime, listChangeWait);
+	}
+}
+
+
+/* Event Handlers */
+
+	EventHandler HandleDataChange(RoomListHelper R, EventArgs args)
+	{
+    	FireGetRoomNames();			
+	}
+
+	push roomSelect
+	{
+		equipment_ID = rHelp.GetRoomEquipId(getlastmodifiedarrayindex());
+	}
+        
+/*******************************************************************************************
+  Main()
+  Uncomment and place one-time startup code here
+  (This code will get called when the system starts up)
+*******************************************************************************************/
+
+Function Main()
+{
+	WaitForInitializationComplete();
+	waitTime = 100;
+
+	WAIT(200)
+	{	
+		RegisterEvent(rHelp,RoomListChange,HandleDataChange);
+		FireGetRoomNames();	
+    }
+}

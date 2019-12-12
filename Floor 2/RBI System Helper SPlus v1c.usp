@@ -1,0 +1,198 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+
+#SYMBOL_NAME "RBI System Helper SPlus v1c"
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+#USER_SIMPLSHARP_LIBRARY "RBI System Helper v1c"
+
+/*
+#HELP_BEGIN
+   (add additional lines of help lines)
+#HELP_END
+*/
+
+
+DIGITAL_INPUT Initialize, SaveFile, MakeBlankFile, _SKIP_;
+ANALOG_INPUT  latitude_degree_in, latitude_minute_in, longitude_degree_in, longitude_minute_in, timezone_in;
+ 
+DIGITAL_OUTPUT initialized_fb, error_fb, FileSaved, PasswordProtected, Lights, FloorPlan, DMX, Shades, Photocells, Scheduler, Outlets, Help,
+Page01, Page02, Page03, Page04, BlinkWarning, Setting01, Setting02, Setting03, Setting04, Setting05, _SKIP_, LatNorth, LongEast ;  
+
+ANALOG_OUTPUT numRooms, numPCs, _SKIP_, latitude_degree, latitude_minute, longitude_degree, longitude_minute, timezone, gmt_offset, initialize_status;
+STRING_OUTPUT timezoneInfo, initialize_status_message;    
+
+STRING_PARAMETER FilePath[50];
+STRING_PARAMETER FileName[50];
+
+Integer PulseTime;
+SystemHelper sHelp;
+SystemSettings GlobalSettings;
+Signed_Integer status;
+
+
+/* Event Handlers */
+
+FUNCTION initializeJson()
+{
+ 	status = sHelp.GetSettings();
+	initialize_status = status;
+
+	cswitch (status)
+		{
+         case(1): //success
+			{			
+				error_fb = 0;
+				initialized_fb = 1;
+				initialize_status_message = "A-Ok";
+				break;
+			}
+		case(-1): //unknown error
+			{
+				error_fb = 1;
+				initialized_fb = 0;
+				initialize_status_message = "Unknown Error";
+				break;
+			}
+		case(-2): //JSON file is missing
+			{
+				error_fb = 1;
+				initialized_fb = 0;
+				initialize_status_message = "Missing Settings JSON File";
+				break;
+			}
+		case(-3): //JSON file is blank
+			{
+				error_fb = 1;
+				initialized_fb = 0;
+				initialize_status_message = "Blank Settings JSON File";
+				break;
+			}
+
+		case(-4): //JSON error
+			{
+				error_fb = 1;
+				initialized_fb = 0;
+				initialize_status_message = "JSON Error";
+				break;
+			}		
+		case(-5): //mutex error
+			{
+				error_fb = 1;
+				initialized_fb = 0;
+				initialize_status_message = "Can't Obtain Mutex for Settings JSON";
+				break;
+			}
+		}
+}
+
+
+EventHandler HandleDataChange (SystemHelper S, SystemSettingArgs args)
+{    
+	GlobalSettings = args.Settings;
+
+    PasswordProtected = GlobalSettings.PasswordProtected;
+	Lights = GlobalSettings.Lights;
+	FloorPlan = GlobalSettings.FloorPlan;
+	Shades = GlobalSettings.Shades;
+	Photocells = GlobalSettings.Photocells;
+	Scheduler = GlobalSettings.Scheduler;
+	Outlets = GlobalSettings.Outlets;
+	DMX = GlobalSettings.DMX;
+	Help = GlobalSettings.Help;
+	BlinkWarning = GlobalSettings.BlinkWarning;
+	Page01 = GlobalSettings.Page01;
+	Page02 = GlobalSettings.Page02;
+	Page03 = GlobalSettings.Page03;
+	Page04 = GlobalSettings.Page04;
+
+	Setting01 = GlobalSettings.Setting01;
+    Setting02 = GlobalSettings.Setting02;
+    Setting03 = GlobalSettings.Setting03;
+	Setting04 = GlobalSettings.Setting04;
+	Setting05 = GlobalSettings.Setting05;
+
+	numRooms = GlobalSettings.NumRooms;
+	numPCs = GlobalSettings.NumPCs;
+
+	latitude_degree = GlobalSettings.LatitudeDegree;
+	latitude_minute = GlobalSettings.LatitudeMinute;
+	longitude_degree = GlobalSettings.LongitudeDegree;
+	longitude_minute = GlobalSettings.LongitudeMinute;
+	LatNorth = GlobalSettings.LatNorth;
+	LongEast = GlobalSettings.LongEast;
+
+	timezone = GlobalSettings.Timezone;
+	timezoneInfo = GlobalSettings.TimezoneInfo;
+
+	gmt_offset = GlobalSettings.GmtOffset;
+}
+
+EventHandler HandleFileSave(SystemHelper S, EventArgs args)
+{
+	PULSE (PulseTime, FileSaved);
+}
+
+PUSH Initialize
+{
+	InitializeJson();
+}
+
+PUSH MakeBlankFile
+{                  
+	sHelp.MakeBlankFile();
+} 
+
+PUSH SaveFile
+{
+  	sHelp.UserSaveFile();
+}
+
+
+CHANGE latitude_degree_in
+{	
+    sHelp.UpdateLatitudeDeg(latitude_degree_in);
+}
+
+CHANGE latitude_minute_in
+{
+	sHelp.UpdateLatitudeMin(latitude_minute_in);
+
+}
+
+CHANGE longitude_degree_in
+{
+	sHelp.UpdateLongitudeDeg(longitude_degree_in);
+}
+
+CHANGE longitude_minute_in
+{
+	sHelp.UpdateLongitudeMin(longitude_minute_in);
+}  
+
+CHANGE timezone_in
+{
+	sHelp.UpdateTimezone(timezone_in);
+}           
+
+Function Main ()
+{
+	WaitForInitializationComplete();
+	Lights = 1;
+
+	Wait(100)
+	{
+		RegisterEvent(sHelp,SettingsUpdated,HandleDataChange); //register for settings change event
+		RegisterEvent(sHelp, FileSaved, HandleFileSave); //register for successful save event
+		sHelp.initialize(FilePath, FileName); //create an instance of # class, give it our filename
+ 		PulseTime = 200;
+		initializeJson(); //get settings from json file
+	}
+}

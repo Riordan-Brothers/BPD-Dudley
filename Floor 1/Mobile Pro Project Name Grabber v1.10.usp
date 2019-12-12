@@ -1,0 +1,505 @@
+/*
+Brian J. Magrogan
+Crestron Electronics
+Mobile Pro Project Name Grabber
+*/
+
+#Symbol_Name "Mobile Pro Project Name Grabber v1.10"
+#Default_Volatile
+#Enable_Stack_Checking
+#Print_To_Trace
+#Enable_Trace
+#Category "10" //Serial
+
+
+/*** Help ***/
+
+#Help_Begin
+The Mobile Pro Project Name Grabber will reach out and grab the name of the current Mobile Pro Project that is loaded, so you do not need to specify the name manually through a serial
+send or a mulitple serial send.
+
+*** Revision History ***
+Version 1.00 - Initial Release
+
+Version 1.10 - Added the ability to use spaces in the search name, previous if you used spaces in the search name it would always fail.
+#Help_End
+
+
+/*** Constants ***/
+
+#define_constant cnFalse						0
+#define_constant cnTrue							1
+
+//Timing Constants
+#define_constant cnStartupDelay					2000
+#define_constant cnLongStartupDelay				12000
+#define_constant cnMessageDelay					500
+
+//Buffer/Size Constants 
+#define_constant cnMaxManifestNameLength		200
+#define_constant cnMaxSearchLocationLength		200
+#define_constant cnMinMatchSegmentLength		2
+#define_constant cnMaxMatchSegmentLength		200                                                     
+
+//Search Constants
+#define_constant csInternalSearch				"Internal"
+#define_constant csRemovableSearch				"External"
+#define_constant cs2SeriesSearchLocation		"\\html\\"
+#define_constant cs2SeriesSearchLocationAlt1	"\\CF0\\html\\"
+#define_constant cs3SeriesSearchLocation		"\\html\\"
+#define_constant cs3SeriesSearchLocationAlt1	"\\RM\\html\\"
+#define_constant csManifestSuffix	 			"_Manifest.xml"
+#define_constant csSearchData	 				"*_Manifest.xml"
+#define_constant csManifestFileSearchError		"Error Finding Project"
+
+//File Operations
+#define_constant cnFileIODelay					100
+
+//Special Characters
+#define_constant cnMaxSpecialCharacters			10
+#define_constant cnSpecialCharOrg1				"_20"
+#define_constant cnSpecialCharReplace1			" "
+#define_constant cnSpecialCharOrg2				""
+#define_constant cnSpecialCharReplace2			""
+#define_constant cnSpecialCharOrg3				""
+#define_constant cnSpecialCharReplace3			""
+#define_constant cnSpecialCharOrg4				""
+#define_constant cnSpecialCharReplace4			""
+#define_constant cnSpecialCharOrg5				""
+#define_constant cnSpecialCharReplace5			""
+#define_constant cnSpecialCharOrg6				""
+#define_constant cnSpecialCharReplace6			""
+#define_constant cnSpecialCharOrg7				""
+#define_constant cnSpecialCharReplace7			""
+#define_constant cnSpecialCharOrg8				""
+#define_constant cnSpecialCharReplace8			""
+#define_constant cnSpecialCharOrg9				""
+#define_constant cnSpecialCharReplace9			""
+#define_constant cnSpecialCharOrg10				""
+#define_constant cnSpecialCharReplace10			""
+
+
+/*** Inputs/Outputs ***/
+
+Digital_Input 	_skip_, _skip_, _skip_, _skip_, Get_Mobile_Project_Name_b;
+
+Digital_Output	_skip_, _skip_, _skip_, _skip_, Get_Mobile_Project_Name_Busy_fb;
+String_Output	_skip_, Mobile_Project_Name_txt$;
+
+
+/*** Parameter ***/
+
+integer_parameter	DebugMode, ProcessorMode;
+String_Parameter 	ProjectLocation$[20], MatchSegment$[50];
+
+#Begin_Parameter_Properties DebugMode
+    propValidUnits = unitDecimal;
+    propDefaultUnit = unitDecimal;
+    propDefaultValue = 0d;  
+    propList = {0d, "Off"}, {1d, "On"};
+#End_Parameter_Properties
+
+#Begin_Parameter_Properties ProcessorMode
+    propValidUnits = unitDecimal;
+    propDefaultUnit = unitDecimal;
+    propDefaultValue = 0d;  
+    propList = {0d, "Standard Processors"}, {1d, "MPS/DMPS Processors"};
+#End_Parameter_Properties
+
+#Begin_Parameter_Properties ProjectLocation$
+    propValidUnits = unitString;
+    propDefaultUnit = unitString;
+    propDefaultValue = csInternalSearch;
+	propList = {csInternalSearch, "Internal Storage"}, {csRemovableSearch, "External Storage"}; 
+#End_Parameter_Properties
+
+#Begin_Parameter_Properties MatchSegment$
+    propValidUnits = unitString;
+    propDefaultUnit = unitString;
+    propDefaultValue = "";
+#End_Parameter_Properties
+
+
+/*** TCP Sockets ***/
+
+
+/*** Structures ***/
+
+
+/*** Variables ***/
+
+integer			g_nDebug;
+
+string 			g_sSearchLocation$[cnMaxSearchLocationLength], g_sSearchLocationAlt$[cnMaxSearchLocationLength], g_sMatchSegment$[cnMaxMatchSegmentLength],
+				g_sManifestFileName$[cnMaxManifestNameLength], g_sPreviousManifestFileName$[cnMaxManifestNameLength], g_sSpecialCharactersOriginal$[cnMaxSpecialCharacters][20],
+				g_sSpecialCharactersReplace$[cnMaxSpecialCharacters][20];
+
+
+/*** Functions ***/
+
+String_Function fnGetSearchLocation()
+{
+	if(g_nDebug) print("***** Start fnGetSearchLocation *****\n");
+
+	switch(GetSeries())
+	{
+     	case(2):
+		{
+       		if(g_nDebug) print("2 Series Processor\n");
+			if(ProjectLocation$ = csInternalSearch) //Internal Memory
+			{
+             	clearbuffer(g_sSearchLocationAlt$);
+				makestring(g_sSearchLocation$, "%s", cs2SeriesSearchLocation);
+			}
+			else if(ProjectLocation$ = csRemovableSearch) //External Memory
+			{
+             	clearbuffer(g_sSearchLocationAlt$);
+				makestring(g_sSearchLocation$, "%s", cs2SeriesSearchLocationAlt1);
+			}
+		}
+		case(3):
+		{
+         	if(g_nDebug) print("3 Series Processor\n");
+			if(ProjectLocation$ = csInternalSearch) //Internal Memory
+			{
+             	clearbuffer(g_sSearchLocationAlt$);
+				makestring(g_sSearchLocation$, "%s", cs3SeriesSearchLocation);
+			}
+			else if(ProjectLocation$ = csRemovableSearch) //External Memory
+			{
+             	clearbuffer(g_sSearchLocationAlt$);
+				makestring(g_sSearchLocation$, "%s", cs3SeriesSearchLocationAlt1);
+			}
+		}
+	}
+
+	if(g_nDebug) print("g_sSearchLocation$ = %s\n", g_sSearchLocation$);
+	return(g_sSearchLocation$);
+
+	if(g_nDebug) print("***** End fnGetSearchLocation *****\n");
+}
+
+Integer_Function fnReplaceCharacterCount()
+{
+ 	integer nCount;
+
+	for(nCount = 1 to cnMaxSpecialCharacters)
+	{
+     	if(g_sSpecialCharactersReplace$[nCount] = "")
+		{
+         	nCount = nCount - 1;
+			break;
+		}
+	}
+	
+	return(nCount);
+}
+
+Integer_Function fnSpecialCharacterCount()
+{
+ 	integer nCount;
+
+	for(nCount = 1 to cnMaxSpecialCharacters)
+	{
+     	if(g_sSpecialCharactersOriginal$[nCount] = "")
+		{
+         	nCount = nCount - 1;
+			break;
+		}
+	}
+	
+	return(nCount);
+}
+
+String_Function fnAddSpecialCharacters(string sManifestFileName$)
+{
+ 	integer nCount, nCount2, nReplaceCharCount;
+	string sTemp$[cnMaxManifestNameLength];
+    
+	if(g_nDebug) print("***** Start fnAddSpecialCharacters *****\n");
+	
+	nReplaceCharCount = fnReplaceCharacterCount();
+	if(g_nDebug) print("nReplaceCharCount = %d\n", nReplaceCharCount);
+	if(g_nDebug) print("sManifestFileName$ = %s\n", sManifestFileName$);
+	clearbuffer(sTemp$); 
+
+	for(nCount = 1 to nReplaceCharCount)
+	{
+     	if(g_nDebug) print("nCount = %d\n", nCount);
+		if(g_nDebug) print("g_sSpecialCharactersReplace$[nCount] = %s\n", g_sSpecialCharactersReplace$[nCount]);
+		if(g_nDebug) print("find(g_sSpecialCharactersReplace$[nCount], sManifestFileName$) = %d\n", find(g_sSpecialCharactersReplace$[nCount], sManifestFileName$));
+		while(find(g_sSpecialCharactersReplace$[nCount], sManifestFileName$))
+		{
+        	if(g_nDebug) print("** Inside while(find(g_sSpecialCharactersReplace$[nCount], sManifestFileName$)) **\n");
+			makestring(sTemp$, "%s", remove(g_sSpecialCharactersReplace$[nCount], sManifestFileName$));
+			nCount2 = len(sTemp$) - len(g_sSpecialCharactersReplace$[nCount]);
+			makestring(sManifestFileName$, "%s%s%s", left(sTemp$, nCount2), g_sSpecialCharactersOriginal$[nCount], sManifestFileName$);
+			if(g_nDebug) print("sTemp$ = %s\n", sTemp$);
+			if(g_nDebug) print("nCount2 = %d\n", nCount);
+			if(g_nDebug) print("g_sSpecialCharactersOriginal$[nCount] = ***%s***\n", g_sSpecialCharactersOriginal$[nCount]);
+			if(g_nDebug) print("sManifestFileName$ = %s\n", sManifestFileName$);
+		}
+	}
+    
+	if(g_nDebug) print("***** End fnAddSpecialCharacters *****\n");
+	
+	return(sManifestFileName$);
+}
+
+String_Function fnRemoveSpecialCharacters(string sManifestFileName$)
+{
+ 	integer nCount, nCount2, nSpecialCharCount;
+	string sTemp$[cnMaxManifestNameLength];
+    
+	if(g_nDebug) print("***** Start fnRemoveSpecialCharacters *****\n");
+	
+	nSpecialCharCount = fnSpecialCharacterCount();
+	if(g_nDebug) print("nSpecialCharCount = %d\n", nSpecialCharCount);
+	if(g_nDebug) print("sManifestFileName$ = %s\n", sManifestFileName$);
+	clearbuffer(sTemp$); 
+
+	for(nCount = 1 to nSpecialCharCount)
+	{
+     	if(g_nDebug) print("nCount = %d\n", nCount);
+		if(g_nDebug) print("g_sSpecialCharactersOriginal$[nCount] = %s\n", g_sSpecialCharactersOriginal$[nCount]);
+		if(g_nDebug) print("find(g_sSpecialCharactersOriginal$[nCount], sManifestFileName$) = %d\n", find(g_sSpecialCharactersOriginal$[nCount], sManifestFileName$));
+		while(find(g_sSpecialCharactersOriginal$[nCount], sManifestFileName$))
+		{
+        	if(g_nDebug) print("** Inside while(find(g_sSpecialCharactersOriginal$[nCount], sManifestFileName$)) **\n");
+			makestring(sTemp$, "%s", remove(g_sSpecialCharactersOriginal$[nCount], sManifestFileName$));
+			nCount2 = len(sTemp$) - len(g_sSpecialCharactersOriginal$[nCount]);
+			makestring(sManifestFileName$, "%s%s%s", left(sTemp$, nCount2), g_sSpecialCharactersReplace$[nCount], sManifestFileName$);
+			if(g_nDebug) print("sTemp$ = %s\n", sTemp$);
+			if(g_nDebug) print("nCount2 = %d\n", nCount);
+			if(g_nDebug) print("g_sSpecialCharactersReplace$[nCount] = ***%s***\n", g_sSpecialCharactersReplace$[nCount]);
+			if(g_nDebug) print("sManifestFileName$ = %s\n", sManifestFileName$);
+		}
+	}
+    
+	if(g_nDebug) print("***** End fnRemoveSpecialCharacters *****\n");
+	
+	return(sManifestFileName$);
+}
+
+String_Function fnFindMobileProject()
+{
+ 	file_info fiFileInfo;
+	integer	nAltLocationFound, nPosition;
+	signed_integer snManifestFileFound, snStartFileIOError, snEndFileIOError;
+	string sManifestFileName$[cnMaxManifestNameLength], sManifestSearchPath$[250], sManifestSearchPathAlt$[250];
+
+	if(g_nDebug) print("***** Start fnFindMobileProject *****\n");
+
+	nAltLocationFound = cnFalse;
+
+	fnGetSearchLocation();
+
+	if(len(g_sMatchSegment$) > 1) //We need to match against some other data as well
+	{
+		makestring(sManifestSearchPath$, "%s*%s%s", g_sSearchLocation$, g_sMatchSegment$, csSearchData);
+	}
+	else
+	{
+     	makestring(sManifestSearchPath$, "%s%s", g_sSearchLocation$, csSearchData);
+	}
+	if(len(sManifestSearchPathAlt$) > 1)
+	{
+		if(len(g_sMatchSegment$) > 1) //We need to match against some other data as well
+		{
+			makestring(sManifestSearchPathAlt$, "%s*%s%s", g_sSearchLocationAlt$, g_sMatchSegment$, csSearchData);
+		}
+		else
+		{
+	     	makestring(sManifestSearchPathAlt$, "%s%s", g_sSearchLocationAlt$, csSearchData);
+		}
+		nAltLocationFound = cnTrue;
+	}
+	else
+	{
+     	clearbuffer(sManifestSearchPathAlt$);
+		nAltLocationFound = cnFalse;
+	}
+			
+	if(g_nDebug) print("sManifestSearchPath$ = %s\n", sManifestSearchPath$);
+	if(g_nDebug) print("sManifestSearchPathAlt$ = %s\n", sManifestSearchPathAlt$);
+
+	makestring(sManifestSearchPath$, "%s", fnAddSpecialCharacters(sManifestSearchPath$));
+	makestring(sManifestSearchPathAlt$, "%s", fnAddSpecialCharacters(sManifestSearchPathAlt$));
+
+	if(g_nDebug) print("sManifestSearchPath$ = %s\n", sManifestSearchPath$);
+	if(g_nDebug) print("sManifestSearchPathAlt$ = %s\n", sManifestSearchPathAlt$);
+		 
+	snStartFileIOError = startfileoperations();
+	while(snStartFileIOError != 0)
+	{
+     	if(g_nDebug) Print ("Start File Operations Error Retrying\n");
+		delay(cnFileIODelay);
+		snStartFileIOError = startfileoperations();
+	}
+		
+	switch(getseries())
+	{
+		case(2):
+		{
+           	snManifestFileFound = FindFirst(sManifestSearchPath$, fiFileInfo);
+			findclose();
+		}
+		case(3):
+		{
+			snManifestFileFound = FindFirstShared(sManifestSearchPath$, fiFileInfo);
+			findclose();			
+		}
+	}
+		
+	if(g_nDebug) print("snManifestFileFound = %d\n", snManifestFileFound);
+
+	if(snManifestFileFound = 0)
+	{
+		makestring(sManifestFileName$, "%s", fiFileInfo.Name);
+	}
+	else if(nAltLocationFound) //File not found try alternate location
+	{
+	    switch(getseries())
+		{
+         	case(2):
+			{
+             	snManifestFileFound = FindFirst(sManifestSearchPathAlt$, fiFileInfo);
+				findclose();
+			}
+			case(3):
+			{
+				snManifestFileFound = FindFirstShared(sManifestSearchPathAlt$, fiFileInfo);
+				findclose();			
+			}
+		}
+
+		if(snManifestFileFound = 0)
+		{
+			makestring(sManifestFileName$, "%s", fiFileInfo.Name);
+		}
+		else
+		{
+          	makestring(sManifestFileName$, "%s", csManifestFileSearchError);
+		} 	
+	}
+	else
+	{
+     	makestring(sManifestFileName$, "%s", csManifestFileSearchError);	
+	}
+	snEndFileIOError = endfileoperations();
+	while(snEndFileIOError != 0)
+	{
+     	if(g_nDebug) Print ("End File Operations Error Retrying\n");
+		delay(cnFileIODelay);
+		snEndFileIOError = endfileoperations();
+	}
+
+	if(g_nDebug) print("sManifestFileName$ = %s\n", sManifestFileName$);
+
+	if(sManifestFileName$ != csManifestFileSearchError)
+	{
+    	makestring(sManifestFileName$, "%s", fnRemoveSpecialCharacters(sManifestFileName$));
+		nPosition = find(csManifestSuffix, sManifestFileName$);
+		if(g_nDebug) print("sManifestFileName$ = %s\n", sManifestFileName$);
+		if(g_nDebug) print("nPosition = %d\n", nPosition);
+		
+		if(nPosition) //Remove the end tag
+		{
+         	makestring(sManifestFileName$, "%s", left(sManifestFileName$, nPosition - 1));
+		}
+	} 
+		
+	return(sManifestFileName$);
+
+	if(g_nDebug) print("***** End fnFindMobileProject *****\n");
+}
+
+Function fnGetMobileProjectName()
+{
+	string sManifestFileName$[cnMaxManifestNameLength];
+	
+	if(!Get_Mobile_Project_Name_Busy_fb)
+	{
+		Get_Mobile_Project_Name_Busy_fb = cnTrue;
+		if(g_nDebug) print("Inside if(!Get_Mobile_Project_Name_Busy_fb)\n");
+
+		makestring(sManifestFileName$, "%s", fnFindMobileProject());
+		if(sManifestFileName$ != g_sPreviousManifestFileName$)
+		{		
+			makestring(Mobile_Project_Name_txt$, "%s", sManifestFileName$);
+			makestring(g_sPreviousManifestFileName$, "%s", sManifestFileName$);
+		}
+		Get_Mobile_Project_Name_Busy_fb = cnFalse;
+	}
+}
+
+
+/*** Event Handlers ***/
+
+Push Get_Mobile_Project_Name_b
+{
+	fnGetMobileProjectName();		
+}
+
+
+/*** Main ***/
+
+Function Main()
+{
+	integer nCount;
+
+	WaitForInitializationComplete();
+    
+	g_nDebug = DebugMode;
+	if(g_nDebug) print("***** Start Function Main *****\n");
+    
+	clearbuffer(g_sSearchLocation$);
+	clearbuffer(g_sSearchLocationAlt$);
+	clearbuffer(g_sPreviousManifestFileName$);
+
+	if(len(MatchSegment$) > 1)
+	{
+        makestring(g_sMatchSegment$, "%s", MatchSegment$);
+	}
+	else
+	{
+    	clearbuffer(g_sMatchSegment$); 	
+	}
+
+	makestring(g_sSpecialCharactersOriginal$[1], "%s", cnSpecialCharOrg1);
+	makestring(g_sSpecialCharactersOriginal$[2], "%s", cnSpecialCharOrg2);
+	makestring(g_sSpecialCharactersOriginal$[3], "%s", cnSpecialCharOrg3);
+	makestring(g_sSpecialCharactersOriginal$[4], "%s", cnSpecialCharOrg4);
+	makestring(g_sSpecialCharactersOriginal$[5], "%s", cnSpecialCharOrg5);
+	makestring(g_sSpecialCharactersOriginal$[6], "%s", cnSpecialCharOrg6);
+	makestring(g_sSpecialCharactersOriginal$[7], "%s", cnSpecialCharOrg7);
+	makestring(g_sSpecialCharactersOriginal$[8], "%s", cnSpecialCharOrg8);
+	makestring(g_sSpecialCharactersOriginal$[9], "%s", cnSpecialCharOrg9);
+	makestring(g_sSpecialCharactersOriginal$[10], "%s", cnSpecialCharOrg10);
+	
+	makestring(g_sSpecialCharactersReplace$[1], "%s", cnSpecialCharReplace1);
+    makestring(g_sSpecialCharactersReplace$[2], "%s", cnSpecialCharReplace2);
+	makestring(g_sSpecialCharactersReplace$[3], "%s", cnSpecialCharReplace3);
+	makestring(g_sSpecialCharactersReplace$[4], "%s", cnSpecialCharReplace4);
+	makestring(g_sSpecialCharactersReplace$[5], "%s", cnSpecialCharReplace5);
+	makestring(g_sSpecialCharactersReplace$[6], "%s", cnSpecialCharReplace6);
+	makestring(g_sSpecialCharactersReplace$[7], "%s", cnSpecialCharReplace7);
+	makestring(g_sSpecialCharactersReplace$[8], "%s", cnSpecialCharReplace8);
+	makestring(g_sSpecialCharactersReplace$[9], "%s", cnSpecialCharReplace9);
+	makestring(g_sSpecialCharactersReplace$[10], "%s", cnSpecialCharReplace10);
+	
+	if(g_nDebug) print("***** Function Main Complete Variable Init *****\n");
+
+	if(ProcessorMode)
+	{
+     	delay(cnLongStartupDelay);
+	}
+	else
+	{
+    	delay(cnStartupDelay); 	
+	}
+
+	fnGetMobileProjectName();
+
+	if(g_nDebug) print("***** End Function Main *****\n");
+}

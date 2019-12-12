@@ -1,0 +1,124 @@
+[BEGIN]
+  Version=1
+[END]
+[BEGIN]
+  ObjTp=FSgntr
+  Sgntr=UserSPlus
+  RelVrs=1
+  IntStrVrs=1
+  SPlusVrs=4.04.01
+  CrossCplrVrs=1.3
+[END]
+[BEGIN]
+  ObjTp=Hd
+[END]
+[BEGIN]
+  ObjTp=Symbol
+  Exclusions=1,19,20,21,88,89,167,168,179,213,214,215,216,217,225,226,248,249,266,267,310,718,756,854,
+  Exclusions_CDS=5
+  Inclusions_CDS=6
+  Name=RBI Motion Logic SPlus v1d
+  SmplCName=RBI Motion Logic SPlus v1d.usp
+  Code=1
+  SysRev5=4.000
+  SMWRev=3.00.00
+  InputCue1=sensorIn
+  InputSigType1=Digital
+  InputCue2=forceOccupancy
+  InputSigType2=Digital
+  InputCue3=forceVacancy
+  InputSigType3=Digital
+  InputCue4=[~UNUSED~]
+  InputSigType4=Digital
+  InputCue5=testModeHeld
+  InputSigType5=Digital
+  OutputCue1=occupiedHeld
+  OutputSigType1=Digital
+  OutputCue2=occupancyEnableFB
+  OutputSigType2=Digital
+  OutputCue3=occupancyDisableFB
+  OutputSigType3=Digital
+  OutputCue4=vacancyEnableFB
+  OutputSigType4=Digital
+  OutputCue5=vacancyDisableFB
+  OutputSigType5=Digital
+  OutputCue6=occupiedP
+  OutputSigType6=Digital
+  OutputCue7=vacantP
+  OutputSigType7=Digital
+  InputList2Cue1=timeoutSeconds
+  InputList2SigType1=Analog
+  InputList2Cue2=timeoutTenths
+  InputList2SigType2=Analog
+  InputList2Cue3=occEnableDisable
+  InputList2SigType3=Analog
+  InputList2Cue4=vacEnableDisable
+  InputList2SigType4=Analog
+  OutputList2Cue1=timeoutSecondsFB
+  OutputList2SigType1=Analog
+  OutputList2Cue2=timeoutTenthsFB
+  OutputList2SigType2=Analog
+  ParamCue1=[Reference Name]
+  ParamCue2=timeoutType
+  ParamSigType2=Constant
+  MinVariableInputs=5
+  MaxVariableInputs=5
+  MinVariableInputsList2=4
+  MaxVariableInputsList2=4
+  MinVariableOutputs=7
+  MaxVariableOutputs=7
+  MinVariableOutputsList2=2
+  MaxVariableOutputsList2=2
+  MinVariableParams=1
+  MaxVariableParams=1
+  Expand=expand_separately
+  Expand2=expand_separately
+  ProgramTree=Logic
+  SymbolTree=32
+  Hint=
+  PdfHelp=
+  HelpID= 
+  Render=4
+  Smpl-C=16
+  CompilerCode=-48
+  CompilerParamCode=27
+  CompilerParamCode5=14
+  NumFixedParams=1
+  Pp1=1
+  Pp2=2
+  MPp=2
+  NVStorage=10
+  ParamSigType1=String
+  SmplCInputCue1=o#
+  SmplCOutputCue1=i#
+  SmplCInputList2Cue1=an#
+  SmplCOutputList2Cue1=ai#
+  SPlus2CompiledName=S2_RBI_Motion_Logic_SPlus_v1d
+  SymJam=NonExclusive
+  FileName=RBI Motion Logic SPlus v1d.ush
+  SIMPLPlusModuleEncoding=0
+  clz1=RBI System Helper v1c
+  clz2=RBI Room Helper v1c
+  clz3=RBI Single Zone v5b
+  clz4=RBI GLPP Helper v5b
+  clz5=RBI Password Helper v2
+  clz6=ClcScheduler
+[END]
+[BEGIN]
+  ObjTp=Dp
+  H=1
+  Tp=1
+  NoS=False
+[END]
+[BEGIN]
+  ObjTp=Dp
+  H=2
+  Tp=1
+  HD=False
+  Sgn=0
+  Lng=False
+  NF=63
+  NoS=True
+  DNF=1
+  VVS=0
+[END]

@@ -1,0 +1,225 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+#SYMBOL_NAME "RBI Dynamic Presets Helper 8 Zones v8"
+// #HINT ""
+// #CATEGORY "" 
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+
+/*
+#HELP_BEGIN
+   (add additional lines of help lines)
+#HELP_END
+*/
+
+#DEFINE_CONSTANT maxZones 8
+
+
+DIGITAL_INPUT preset_init, preset_save; 
+ANALOG_INPUT level_in[maxZones];
+DIGITAL_OUTPUT preset_saved_fb;
+ANALOG_OUTPUT level_out[maxZones];
+STRING_PARAMETER roomID[50];
+STRING_PARAMETER file_path[50];
+STRING_PARAMETER preset_name[50];
+
+INTEGER_PARAMETER default_level;
+
+FILE_INFO nFileInfo;
+
+SIGNED_INTEGER nFileHandle;
+SIGNED_INTEGER nFileFound;
+SIGNED_INTEGER iErrorCode; 
+ 
+INTEGER three_series; 
+
+STRING sBuf[2000];
+STRING file_contents[2000];
+STRING file_line[50];
+STRING str[50];
+
+STRING_FUNCTION get_full_path(string preset_name)
+{
+	string full_path[255];
+
+    if(three_series)
+	{	  
+		MAKESTRING (full_path, "%s\\%s\\%s.txt", file_path, roomID, preset_name); //create our full path for reading and saving
+    }
+
+	else
+	{
+        MAKESTRING (full_path, "%s\\%s-%s.txt", file_path, roomID, preset_name); //create our full path for reading and saving
+	}
+
+	return (full_path);
+}
+
+FUNCTION init_preset(string preset_name)
+{
+  	integer i;
+	string full_path[255];
+
+	full_path = get_full_path(preset_name);
+
+	StartFileOperations(); //we're going to be reading and writing files
+          
+ 	if (three_series=1)
+		{
+           nFileFound = FindFirstShared(full_path, nFileInfo); //look for our file
+         }
+	else
+	{		
+		nFileFound = FindFirst(full_path, nFileInfo); //look for our file
+     }
+
+	IF (nFileFound < 0){ //if file not found
+
+        GenerateUserNotice ("Creating New Presets File: %s \n", full_path); //log that we're creating a new file
+
+			if (three_series=1)
+			{
+				nFileHandle = FileOpenShared(full_path, _O_CREAT | _O_TEXT | _O_WRONLY); //create new file that we can write to
+            }
+	 
+			else 
+			{
+				nFileHandle = FileOpen(full_path, _O_CREAT | _O_TEXT | _O_WRONLY); //create new file that we can write to
+        	}
+                   
+		sBuf = "";		
+
+		FOR (i = 1 to maxZones)
+		{
+			level_out[i] = default_level; //set default levels for output here instead of reading them in from a file
+			MAKESTRING(file_line, "load%02u = %u,\r", i, default_level); //create string
+			sBuf = sBuf + file_line;
+		}
+            
+			FileWrite(nFileHandle, sBuf, len(sBuf)); //add string to our file
+			FileClose(nFileHandle); //done with our file, so close it
+	}
+
+	ELSE
+	{
+        if (three_series=1)
+     	{
+		nFileHandle = FileOpenShared(full_path, _O_TEXT | _O_RDONLY); //file exists, so let's read from it
+        }
+
+		else  
+        {
+		nFileHandle = FileOpen(full_path, _O_TEXT | _O_RDONLY); //file exists, so let's read from it
+        }
+
+		IF (nFileHandle < 0) //if some  file error, log it
+		{
+		GenerateUserError("Error Opening: %s, Error Code: %u\n", full_path, nFileHandle);
+		FileClose(nFileHandle); //done with our file, so close it
+    	}
+
+		ELSE
+		{
+
+       iErrorCode = Fileread(nFileHandle, file_contents, 2000); // read in our file contents
+
+		if (iErrorCode<0)
+		{
+          GenerateUserError("Error Creating String, Error Code: %u\n", iErrorCode); 	
+		}
+        		
+		FOR (i = 1 to maxZones){
+
+			file_line = REMOVE(",", file_contents);
+			str = REMOVE ("=", file_line);			
+			level_out[i] = Atoi (file_line);
+
+		} //for 
+
+             FileClose(nFileHandle); //done with our file, so close it
+		
+		} //else
+	
+	}//else
+
+	EndFileOperations(); //we're done with file operations
+}
+
+FUNCTION invoke_presets_init()
+{
+	init_preset(preset_name);
+}
+
+PUSH preset_save
+{
+    integer i;
+    string full_path[255];
+	full_path = get_full_path(preset_name); //create our full path for reading and saving
+	
+	StartFileOperations();
+
+	if(three_series=1)
+	{	
+	nFileHandle = FileOpenShared(full_path, _O_TEXT | _O_CREAT | _O_WRONLY |_O_TRUNC); //open file for writing
+    }
+
+	else
+	{	
+	nFileHandle = FileOpen(full_path, _O_TEXT | _O_CREAT | _O_WRONLY |_O_TRUNC); //open file for writing
+    }
+
+	IF (nFileHandle<0)
+	{ 
+		GenerateUserError("Error Opening: %s, Error Code: %u \n", full_path, nFileHandle);
+	}
+
+	ELSE
+	{
+		sBuf = "";
+                
+		FOR (i = 1 to maxZones)
+		{
+           	level_out[i] = level_in[i];
+			MAKESTRING (file_line, "load%02u = %u,\r", i, level_in[i]); //create string
+			sBuf = sBuf + file_line;            
+		}
+
+			iErrorCode = FileWrite(nFileHandle, sBuf, len(sBuf)); //add string to our file 	
+
+            	if (iErrorCode < 0)
+				{
+     				GenerateUserError("Error Saving To: %s, Error Code: %u \n", full_path, nFileHandle);
+				}
+	}
+
+	if (iErrorCode >= 0)
+	{
+		PULSE (25, preset_saved_fb);
+	}
+       
+	FileClose(nFileHandle); //done with our file, so close it
+	EndFileOperations();
+}
+  
+push preset_init
+{
+	invoke_presets_init();
+}
+
+Function Main()
+{
+    WaitForInitializationComplete();
+
+	if (GetSeries()=3){
+        three_series = 1;
+		 }
+			
+	invoke_presets_init();   
+}

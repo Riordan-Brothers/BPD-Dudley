@@ -1,0 +1,148 @@
+/*
+Dealer Name: Riordan Brothers Integration
+Programmer: Hope Roth
+*/
+
+#HELP_BEGIN
+
+This module authenticates to the control processor in order to get 
+a list of usernames to display on the GUI. It requires authentication to be enabled.
+
+Input the username and password of a device administrator and 
+pulse passwordEnter to get a list of usernames. 
+
+If the SaveList parameter is set to yes, this module will save the 
+list in a text file. If it is set to no, the admin must authenticate 
+every time the program resets.
+
+
+Version history:
+v1 - initial release
+
+#HELP_END
+
+
+#SYMBOL_NAME "RBI Username List v1"
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+#USER_SIMPLSHARP_LIBRARY "RBI Password Helper v2"
+
+#DEFINE_CONSTANT MaxUsernames 25
+
+INTEGER_PARAMETER SaveList;
+
+#BEGIN_PARAMETER_PROPERTIES SaveList
+	propValidUnits = unitDecimal;
+	propDefaultValue = 0d;
+	propList = {0d, "no"}, {1d, "yes"};
+	#END_PARAMETER_PROPERTIES
+
+DIGITAL_INPUT passwordEnter;
+STRING_INPUT adminName[50], adminPassword[50];
+
+STRING_OUTPUT _SKIP_, adminNameOut, adminPasswordOut, _SKIP_, loginResult, _SKIP_, usernames[MaxUsernames];
+
+SIGNED_INTEGER result;  
+
+UsernameHelper uHelp;
+
+FUNCTION FireGetUsernames(integer count)
+{
+	integer i;
+	integer m;	
+
+	if (count <= MaxUsernames) //check to make sure we don't have too many users
+	{
+		m = count;
+	}
+
+	else
+	{
+     	MakeString(loginResult, "Number of Users Exceeds %u", MaxUsernames); //let user know there are too many usernames to get them all
+		Print("Number of Users Exceeds %u", MaxUsernames);
+		m = MaxUsernames;
+	}
+
+	for (i = 1 to m)
+	{
+     	usernames[i] = uHelp.ReturnUser(i);
+	}
+}
+
+FUNCTION GetAccessToken()
+{
+    result = uHelp.InitToken(adminName, adminPassword);
+	adminNameOut = ""; //clear out username and password from GUI
+	adminPasswordOut = "";
+
+	cswitch(result)//so how did that go?
+	{
+        case(-6):
+		{
+            loginResult = "Error"; //unknown error
+			break;
+		}	
+		case(-5):
+		{
+            loginResult = "Username or Password Was Blank";
+			break;
+		}
+		case(-4):
+		{
+			loginResult = "This Account Has No Access";
+			break;
+		}		
+		case(-3):
+		{
+			loginResult = "This Account Requires Admin Access";
+			break;
+		}
+
+		case(-2):
+		{
+            loginResult = "Username or Password Incorrect";
+			break;
+		}
+		case(-1):
+		{
+            loginResult = "Authentication Is Not Enabled on This Processor";
+			break;
+		}		
+		case(1):
+		{
+            loginResult = "Success!";
+			break;
+		}
+	}
+}
+
+/* Event Handlers */
+
+	EventHandler HandleListChange(UsernameHelper U, UserListEventArgs args)
+	{
+    	FireGetUsernames(args.ListCount);			
+	}
+
+      
+	PUSH passwordEnter
+	{
+ 		GetAccessToken();
+	}
+    
+/*******************************************************************************************
+  Main()
+  Uncomment and place one-time startup code here
+  (This code will get called when the system starts up)
+*******************************************************************************************/
+
+Function Main()
+{
+	WaitForInitializationComplete();
+	WAIT(200)
+	{	
+		RegisterEvent(uHelp,OnListUpdate,HandleListChange);
+		uHelp.Initialize(SaveList);
+    }
+}

@@ -1,0 +1,135 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+
+#SYMBOL_NAME "RBI GLPP Helper SPlus v5b"
+#CATEGORY "32" // Miscellaneous
+
+#DEFAULT_NONVOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+#USER_SIMPLSHARP_LIBRARY "RBI GLPP Helper v5b"
+
+
+DIGITAL_INPUT _SKIP_, enableMotion, disableMotion, _SKIP_, enablePC, disablePC;
+
+ANALOG_INPUT _SKIP_, updateTimeoutFusion, _SKIP_, _SKIP_;
+
+STRING_INPUT   _SKIP_, _SKIP_, _SKIP_, _SKIP_, newRoomName[100], newZoneName[8][100];
+
+DIGITAL_OUTPUT _SKIP_, DefeatLocalMotionLogic, DefeatLocalPC, _SKIP_, glppInitialized;
+ANALOG_OUTPUT _SKIP_, SetTimeout, TimeoutFusionFB, _SKIP_, _SKIP_, OccupancyAction, VacatingAction;
+STRING_OUTPUT  _SKIP_, RoomName$, ZoneName[8];
+
+STRING_PARAMETER RoomID[50];
+
+#BEGIN_PARAMETER_PROPERTIES RoomID
+  	propValidUnits = unitString;
+   	propDefaultUnit = unitString;
+   // propBounds = lower_bound , upper_bound;
+   // propDefaultValue = ;  // or, propDefaultValue = "";
+   // propList = // { "value" , "label" } , { "value" , "label" } , ... ;
+   // propShortDescription = "status_bar_hint_text";
+   // #BEGIN_PROP_FULL_DESCRIPTION  line_1...  line_2...  line_n  #END_PROP_FULL_DESCRIPTION
+   // #BEGIN_PROP_NOTES line_1...  line_2...  line_n  #END_PROP_NOTES
+#END_PARAMETER_PROPERTIES
+ 
+XML_Helper Helper;
+INTEGER newTimeout;
+SIGNED_INTEGER status;
+
+FUNCTION Initialize()
+{
+	status = Helper.Initialize(roomID);
+	if (status > 0)
+		{
+			glppInitialized = 1;
+		}
+}
+	
+
+/* Event Handlers */
+
+EventHandler HandleDataChange(XML_Helper P, GLPPEventArgs args)
+{
+	INTEGER i;
+
+	glppInitialized = 1; //room is now initialized
+
+
+	DefeatLocalMotionLogic = args.glppSettings.DefeatLocalMotion;
+	DefeatLocalPC = args.glppSettings.DefeatLocalPC;
+	SetTimeout = args.glppSettings.SetTimeout;
+	OccupancyAction = args.glppSettings.OccupancyAction;
+	VacatingAction = args.glppSettings.VacatingAction;
+	RoomName$ = args.glppSettings.RoomName;    
+
+	TimeoutFusionFB = SetTimeout/10; // change from miliseconds to seconds  	
+
+    FOR (i = 1 to 8){
+          
+		ZoneName[i] = args.glppSettings.ZoneNames[i-1];
+
+		} 
+}
+
+threadsafe change newRoomName
+{
+   Helper.setName(newRoomName);
+}
+
+threadsafe change newZoneName
+{
+	integer i;
+	i = getlastmodifiedarrayindex();
+   
+	Helper.setZoneName(i-1, newZoneName[i]);
+}
+
+
+threadsafe change updateTimeoutFusion
+{	
+	if(updateTimeoutFusion > 0) //don't 0 out
+	{
+		Helper.setTimeout(updateTimeoutFusion*10); //change from seconds to miliseconds
+    }
+}
+
+push enableMotion
+{
+	Helper.enableMotion();
+}
+
+push disableMotion
+{
+	Helper.disableMotion();
+}
+
+push enablePC
+{
+	Helper.enablePC();
+}
+
+push disablePC
+{
+	Helper.disablePC();
+}
+
+/*******************************************************************************************
+  Main()
+  Uncomment and place one-time startup code here
+  (This code will get called when the system starts up)
+*******************************************************************************************/
+
+Function Main()
+{
+	WaitForInitializationComplete();
+
+	RegisterEvent(Helper,OnDataChange,HandleDataChange);     
+	Initialize();
+}
+

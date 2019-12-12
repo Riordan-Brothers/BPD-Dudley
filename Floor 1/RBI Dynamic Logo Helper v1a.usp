@@ -1,0 +1,66 @@
+/*
+Dealer Name: Riordan Brothers
+Programmer: Hope Roth
+Comments:
+*/
+
+
+#SYMBOL_NAME "RBI Dynamic Logo Helper v1a"
+// #HINT ""
+// #CATEGORY "" 
+
+#DEFAULT_VOLATILE
+#ENABLE_STACK_CHECKING
+#ENABLE_TRACE
+
+#HELP_BEGIN
+
+This module takes a string with the Processor IP address and a parameter 
+with the filename of the customer logo and creates a URL that can be used 
+to drive a dynamic graphic on a panel.
+
+There is an optional digital input for a secure connection. When this input is
+held high, the URL will be created using https instead of http.
+
+Version history:
+v1 - initial release
+v1a - added digital input for a secure (https) connection
+
+#HELP_END
+
+
+STRING_INPUT processorIP[255];
+ 
+DIGITAL_INPUT SslEnabled;
+STRING_PARAMETER filename[255];
+         
+#BEGIN_PARAMETER_PROPERTIES filename
+	propDefaultValue="logo.png";
+#END_PARAMETER_PROPERTIES
+
+STRING_OUTPUT url;
+  
+Function MakeUrlString()
+{
+	if (SslEnabled)
+	{
+		makestring(url, "https://%s/%s", processorIP, filename);
+	}
+
+	else
+	{
+ 		makestring(url, "http://%s/%s", processorIP, filename);
+    }
+}
+
+
+Change processorIP
+{
+	MakeUrlString();
+}
+
+Change SslEnabled
+{
+	MakeUrlString();
+}
+

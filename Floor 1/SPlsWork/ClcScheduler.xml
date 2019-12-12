@@ -1,0 +1,984 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>ClcScheduler</name>
+  </assembly>
+  <members>
+    <member name="T:ClcScheduler.GlobalActionEventArgs">
+      <summary>
+            Transport for global actions to trigger
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.GlobalActionEventArgs.#ctor">
+      <summary>
+            For S+ Compatibility, do not use
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.GlobalActionEventArgs.#ctor(System.Collections.Generic.IEnumerable{System.UInt16})">
+      <summary>
+            Create event args
+            </summary>
+      <param name="Actions">
+      </param>
+    </member>
+    <member name="P:ClcScheduler.GlobalActionEventArgs.Actions">
+      <summary>
+            Actions to perform
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.GlobalActionEventArgs.ActionsCount">
+      <summary>
+            Number of actions to perform
+            </summary>
+    </member>
+    <member name="T:ClcScheduler.SpaceActionEventArgs">
+      <summary>
+            Carrier for Space Actions
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.SpaceActionEventArgs.#ctor">
+      <summary>
+            For S+ Compatibility only, do not use
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.SpaceActionEventArgs.#ctor(ClcScheduler.SpaceActions)">
+      <summary>
+            Create space action event args
+            </summary>
+      <param name="Actions">Actions to perform</param>
+    </member>
+    <member name="P:ClcScheduler.SpaceActionEventArgs.Actions">
+      <summary>
+            Actions
+            </summary>
+    </member>
+    <!-- Badly formed XML comment ignored for member "T:ClcScheduler.GlobalActionHelper" -->
+    <member name="T:ClcScheduler.eSpaceKeypadAction">
+      <summary>
+            Keypad Actions
+            </summary>
+    </member>
+    <member name="T:ClcScheduler.eSpaceOccupancyAction">
+      <summary>
+            Occupancy Actions
+            </summary>
+    </member>
+    <member name="T:ClcScheduler.eSpacePhotocellAction">
+      <summary>
+            Photocell Actions
+            </summary>
+    </member>
+    <member name="T:ClcScheduler.SpaceActions">
+      <summary>
+            Actions to perform on a space
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.SpaceActions.#ctor">
+      <summary>
+            For S+ Compatibility, do not use
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.SpaceActions.#ctor(System.String)">
+      <summary>
+            Constructor
+            </summary>
+      <param name="SpaceId">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.SpaceActions.SetKeypadAction(ClcScheduler.eSpaceKeypadAction)">
+      <summary>
+            Sets the keypad action
+            </summary>
+      <param name="Action">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.SpaceActions.SetOccupancyAction(ClcScheduler.eSpaceOccupancyAction)">
+      <summary>
+            Set the occupancy action
+            </summary>
+      <param name="Action">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.SpaceActions.SetPhotocellAction(ClcScheduler.eSpacePhotocellAction)">
+      <summary>
+            Set the photocell action
+            </summary>
+      <param name="Action">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.SpaceActions.SetSceneToRecall(System.Int16)">
+      <summary>
+            Set the scene to recall
+            </summary>
+      <param name="SceneId">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.SpaceActions.ToggleLocalAction(System.UInt16)">
+      <summary>
+            Toggles the selection of a local action
+            </summary>
+      <param name="ActionIndex">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.SpaceActions.IsLocalActionActive(System.UInt16)">
+      <summary>
+            Is the local action active
+            </summary>
+      <param name="ActionIndex">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.SpaceActions.Clone">
+      <summary>
+            Clones
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="E:ClcScheduler.SpaceActions.OnActionChange">
+      <summary>
+            Fires when any of the actions are modified
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.SpaceActions.SpaceId">
+      <summary>
+            Space ID to perform actions on
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.SpaceActions.KeypadAction">
+      <summary>
+            Keypad Actions to perform
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.SpaceActions.OccupancyAction">
+      <summary>
+            Occupancy Actions to perform
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.SpaceActions.PhotocellAction">
+      <summary>
+            Photocell Actions to perform
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.SpaceActions.RecallScene">
+      <summary>
+            Scene to recall
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.SpaceActions.DiscreteActionsCount">
+      <summary>
+            Discrete ACtions Count
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.SpaceActions.DiscreteActionsInternal">
+      <summary>
+            Discrete Actions to invoke
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.SpaceActions.DiscreteActions">
+      <summary>
+            Discrete Actions
+            </summary>
+    </member>
+    <member name="T:ClcScheduler.Space">
+      <summary>
+            Defines a controllable space
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.Space.#ctor">
+      <summary>
+            Default constructor required for S+ compatibility.  Use Register to register this space.
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.Space.Register(System.String,System.String)">
+      <summary>
+            Register space
+            </summary>
+      <param name="Id">
+      </param>
+      <param name="Name">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.Space.Unregister">
+      <summary>
+            Unregister space
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.Space.PerformActions(ClcScheduler.SpaceActions)">
+      <summary>
+            Perform actions
+            </summary>
+      <param name="Actions">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.Space.UpdateSupportedActions(System.UInt16,System.UInt16,System.UInt16)">
+      <summary>
+            Set the supported actions
+            </summary>
+      <param name="Keypad">
+      </param>
+      <param name="Occupancy">
+      </param>
+      <param name="Photocell">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.Space.RegisterDiscreteAction(System.UInt16,System.String)">
+      <summary>
+            Register a discrete action for this space
+            </summary>
+      <param name="Id">
+      </param>
+      <param name="Name">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.Space.UnregisterDiscreteAction(System.UInt16)">
+      <summary>
+            Unregister a discrete action for this space
+            </summary>
+      <param name="Id">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.Space.GetDiscreteActions">
+      <summary>
+            Discrete actions available for this space
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.Space.RegisterSceneName(System.UInt16,System.String)">
+      <summary>
+            Register a scene for this space
+            </summary>
+      <param name="Id">
+      </param>
+      <param name="Name">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.Space.UnregisterSceneName(System.UInt16)">
+      <summary>
+            Unregister a scene for this space
+            </summary>
+      <param name="Id">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.Space.GetSceneNames">
+      <summary>
+            Scenes available for this space
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.Space.GetSceneName(System.UInt16)">
+      <summary>
+            Obtains the scene name for a space, returning "Scene X" where X is the scene ID if the scene is not found.
+            </summary>
+      <param name="SceneId">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.Space.GetSceneNameOrEmpty(System.UInt16)">
+      <summary>
+            Obtains the scene name for a space
+            </summary>
+      <param name="SceneId">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.Space.GetActionName(System.UInt16)">
+      <summary>
+            Obtains the Action name for a space
+            </summary>
+      <param name="ActionId">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.Space.GetActionCount">
+      <summary>
+            Get total actions
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="P:ClcScheduler.Space.Registered">
+      <summary>
+            Is this space registered
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Space.RegisteredSplus">
+      <summary>
+            Is this space registered for splus
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Space.SupportsDiscreteActions">
+      <summary>
+            Does the space support discrete actions
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Space.SupportsKeypadActions">
+      <summary>
+            Does the space support keypad actions
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Space.SupportsOccupancyActions">
+      <summary>
+            Does the space support occupancy actions
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Space.SupportsPhotocellActions">
+      <summary>
+            Does the space support photocell actions
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Space.Id">
+      <summary>
+            Unique ID of the space
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Space.Name">
+      <summary>
+            Name of the space
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.Space.OnSpaceAction">
+      <summary>
+            Event that fires when actions should be performed on a space
+            </summary>
+    </member>
+    <member name="T:ClcScheduler.eEventTimeReference">
+      <summary>
+            Event Reference point
+            </summary>
+    </member>
+    <member name="T:ClcScheduler.ScheduledEvent">
+      <summary>
+            Scheduled event
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.ScheduledEvent.Sunday">
+      <summary>
+            Constant for Sunday Recurrence
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.ScheduledEvent.Monday">
+      <summary>
+            Constant for Monday Recurrence
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.ScheduledEvent.Tuesday">
+      <summary>
+            Constant for Tuesday Recurrence
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.ScheduledEvent.Wednesday">
+      <summary>
+            Constant for Wednesday Recurrence
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.ScheduledEvent.Thursday">
+      <summary>
+            Constant for Thursday Recurrence
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.ScheduledEvent.Friday">
+      <summary>
+            Constant for Friday Recurrence
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.ScheduledEvent.Saturday">
+      <summary>
+            Constant for Saturday Recurrence
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.#ctor">
+      <summary>
+            For S+ Compatibility, do not use
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.#ctor(System.String,System.TimeSpan,ClcScheduler.eEventTimeReference,Crestron.SimplSharp.Scheduler.ScheduledEventCommon.eWeekDays,System.Boolean)">
+      <summary>
+            Constructor
+            </summary>
+      <param name="EventTime">
+      </param>
+      <param name="EventTimeReference">
+      </param>
+      <param name="GlobalScene">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.Schedule">
+      <summary>
+            Default schedule action
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.ExecuteEvent">
+      <summary>
+            Executes an event
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.Save">
+      <summary>
+            Save edits
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.Cancel">
+      <summary>
+            Cancel edits
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.InitEdit">
+      <summary>
+            Initializes edits to current settings
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.EditActiveState(System.Boolean)">
+      <summary>
+            Set the EditActive state
+            </summary>
+      <param name="Active">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.ToggleEditActiveState">
+      <summary>
+            Toggles the edit active state
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.EditTime(System.Int32)">
+      <summary>
+            Edit Time
+            </summary>
+      <param name="Hours">
+      </param>
+      <param name="Minutes">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.ToggleRecurrence(System.Int32)">
+      <summary>
+            Toggle the recurrence
+            </summary>
+      <param name="RecurrenceDays">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.IsRecurrenceSet(System.Int32)">
+      <summary>
+            Is the recurrence set for this event
+            </summary>
+      <param name="RecurrenceDay">Day to check against</param>
+      <returns>1 if set, 0 if not set</returns>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.SetTimeReference(ClcScheduler.eEventTimeReference)">
+      <summary>
+            Set the time reference
+            </summary>
+      <param name="TimeReference">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.FormatTime(ClcScheduler.eEventTimeReference,System.TimeSpan)">
+      <summary>
+            Foramt display time
+            </summary>
+      <param name="Tref">
+      </param>
+      <param name="Ts">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.SchedulerEngineState">
+      <summary>
+            Get state from CrestronTimerEngine
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.GetSpaceActionIdsActive">
+      <summary>
+            Returns a list of space action IDs enabled for a space
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.AddOrGetSpaceAction(System.String)">
+      <summary>
+            SpaceActions
+            </summary>
+      <param name="SpaceId">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.IsSpaceActionEnabled(System.String)">
+      <summary>
+            Is space action enabled
+            </summary>
+      <param name="SpaceId">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.RemoveSpaceAction(System.String)">
+      <summary>
+            Removes a specific SpaceAction from the list of space actions
+            </summary>
+      <param name="SpaceId">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.IsGlobalActionSet(System.UInt16)">
+      <summary>
+            Is global action set for this event 
+            </summary>
+      <param name="ActionIndex">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.ScheduledEvent.ToggleGlobalAction(System.UInt16)">
+      <summary>
+            Toggles the selection of a global action
+            </summary>
+      <param name="ActionIndex">
+      </param>
+    </member>
+    <member name="E:ClcScheduler.ScheduledEvent.OnScheduledEventPropertyChange">
+      <summary>
+            Fires when a scheduled event property is changed
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.ScheduledEvent.OnGlobalActionsChange">
+      <summary>
+            Fires when an event global action setting is changed
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.ScheduledEvent.OnSpaceActionsChange">
+      <summary>
+            Fires when an event space action is added or removed
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.ScheduledEvent.OnSaved">
+      <summary>
+            Fires when the event is saved
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.Active">
+      <summary>
+            Is this active
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.EditActive">
+      <summary>
+            Is this active during editing
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.EditActiveSplus">
+      <summary>
+            Is this active for editing for S+ use
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.Name">
+      <summary>
+            Name of the event
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.EditName">
+      <summary>
+            Edit name of the event
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.EventTime">
+      <summary>
+            Time the event occurs
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.EditEventTime">
+      <summary>
+            Temporary eventtime
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.EventTimeStr">
+      <summary>
+            Get Event Time String
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.Recurrence">
+      <summary>
+            Recurrence
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.EditRecurrence">
+      <summary>
+            Recurrence during editing
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.EventTimeReference">
+      <summary>
+            Reference point for the event time
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.EditEventTimeReference">
+      <summary>
+            Reference point for the event time during editing
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.GlobalActions">
+      <summary>
+            Global Actions to perform
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.SpaceActions">
+      <summary>
+            Space Actions to perform
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduledEvent.Id">
+      <summary>
+            ID of Event
+            </summary>
+    </member>
+    <member name="T:ClcScheduler.ScheduleEditor">
+      <summary>
+            Provides an interface for editing schedules
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduleEditor.#ctor">
+      <summary>
+            Constructor
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduleEditor.CreateEvent">
+      <summary>
+            Creates a new event
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduleEditor.SelectEvent(System.UInt16)">
+      <summary>
+            Select an event
+            </summary>
+      <param name="EventIndex">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.ScheduleEditor.DeleteCurrentEvent">
+      <summary>
+            Deletes the current event
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.ScheduleEditor.IsCurrentEvent(ClcScheduler.ScheduledEvent)">
+      <summary>
+            Is the passed event the currently selected event
+            </summary>
+      <param name="Evt">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.ScheduleEditor.SelectSpace(System.UInt16)">
+      <summary>
+            Select a space for editing of actions
+            </summary>
+      <param name="SpaceIndex">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.ScheduleEditor.GetSpaceForCurrentSpaceActions(ClcScheduler.Space@)">
+      <summary>
+            Gets the space for the CurrentSpaceActions
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="E:ClcScheduler.ScheduleEditor.OnEventsListChange">
+      <summary>
+            Fires when the events list changes
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.ScheduleEditor.OnEventSelect">
+      <summary>
+            Fires when an event is selected
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.ScheduleEditor.OnEventPropertyChange">
+      <summary>
+            Fires when an events properties change
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.ScheduleEditor.OnEventGlobalActionChange">
+      <summary>
+            Fires when an events global action list changes
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.ScheduleEditor.OnEventSpaceActionAssignmentChange">
+      <summary>
+            Fires when there is a change in space action assignment
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.ScheduleEditor.OnEventSpaceActionChange">
+      <summary>
+            Fires when an events selected space actions list changes
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduleEditor.Events">
+      <summary>
+            Events being edited
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduleEditor.EventsCount">
+      <summary>
+            Number of events
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduleEditor.CurrentSpaceIndex">
+      <summary>
+            Index of currently selected space
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduleEditor.CurrentEvent">
+      <summary>
+            Current event being edited
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.ScheduleEditor.CurrentSpaceActions">
+      <summary>
+            Current event being edited
+            </summary>
+    </member>
+    <member name="T:ClcScheduler.Config">
+      <summary>
+            Defines the configuration for 
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.Config.Events">
+      <summary>
+            Scheduled events.  Access through methods instead of calling directly on this.
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.Config.CreateScheduledEvent">
+      <summary>
+            Create a scheduled event
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.Config.DeleteScheduledEvent(System.Guid)">
+      <summary>
+            Deletes an event
+            </summary>
+      <param name="Id">ID of Event to Delete</param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.Config.GetScheduledEvent(System.Guid)">
+      <summary>
+            Obtains a scheduled event by ID
+            </summary>
+      <param name="Id">
+      </param>
+      <returns>Scheduled event or null if not found</returns>
+    </member>
+    <member name="M:ClcScheduler.Config.GetSchedledEvents">
+      <summary>
+            Get list of scheduled events
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.Config.#ctor">
+      <summary>
+            Constructor
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.Config.OnEnabledChange">
+      <summary>
+            Fires when enabled changes
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.Config.OnEventsListChange">
+      <summary>
+            Fires when the events list changes
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Config.Enabled">
+      <summary>
+            Is the scheduler enabled
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Config.EnabledSplus">
+      <summary>
+            Is the scheduler enabled
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Config.Latitude">
+      <summary>
+            Program Latitude
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Config.Longitude">
+      <summary>
+            Program Longitude
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Config.LatitudeStr">
+      <summary>
+            Program Latitude as a decimal string
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.Config.LongitudeStr">
+      <summary>
+            Program Longitude as a decimal string
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.CentralScheduler.GlobalActionHelper">
+      <summary>
+            Fires when one or more global actions are triggered.
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.CentralScheduler.StorageSubPath">
+      <summary>
+            Subpath used to store the config file 
+            </summary>
+    </member>
+    <member name="F:ClcScheduler.CentralScheduler.StorageFileFullPath">
+      <summary>
+            Full file path used to store the config file
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.RegisterGlobalAction(System.UInt16,System.String)">
+      <summary>
+            Register a Global action
+            </summary>
+      <param name="Id">
+      </param>
+      <param name="Name">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.UnregisterGlobalAction(System.UInt16)">
+      <summary>
+            Unregister a Global action
+            </summary>
+      <param name="Id">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.GetGlobalActions">
+      <summary>
+            Global actions available for this space
+            </summary>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.GetGlobalAction(System.UInt16)">
+      <summary>
+            Obtains a global action
+            </summary>
+      <param name="ActionId">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.PerformGlobalActions(System.Collections.Generic.IEnumerable{System.UInt16})">
+      <summary>
+            Performs global actions
+            </summary>
+      <param name="Actions">
+      </param>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.GetSpace(System.String)">
+      <summary>
+            Obtains a space
+            </summary>
+      <param name="SpaceId">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.GetSpaceName(System.String)">
+      <summary>
+            Obtains a space
+            </summary>
+      <param name="SpaceId">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.GetSpaceIdForIndex(System.Int32)">
+      <summary>
+            Obtains the space ID for a specific index
+            </summary>
+      <param name="SpaceIndex">
+      </param>
+      <returns>The Space ID if one exists at the index otherwise -1</returns>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.GetSpaceIndexForId(System.String)">
+      <summary>
+            Obtains the space list index of a space ID
+            </summary>
+      <param name="SpaceId">
+      </param>
+      <returns>
+      </returns>
+    </member>
+    <member name="F:ClcScheduler.CentralScheduler.Config">
+      <summary>
+            Configuration
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.LoadConfig">
+      <summary>
+            Loads in a config file to the active config
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.SaveConfig">
+      <summary>
+            Saves the config
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.CentralScheduler.SetStorageBaseDirectory(System.String)">
+      <summary>
+            Set the the base storage directory for the scheduling files
+            </summary>
+      <param name="Directory">
+      </param>
+    </member>
+    <member name="E:ClcScheduler.CentralScheduler.OnConfigLoaded">
+      <summary>
+            Fires when a config has been loaded
+            </summary>
+    </member>
+    <member name="E:ClcScheduler.CentralScheduler.OnConfigSaved">
+      <summary>
+            Fires when a config has been saved
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.CentralScheduler.StorageBaseDirectory">
+      <summary>
+            Base directory for storing config.  Default \NVRAM
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.CentralScheduler.GlobalActionCount">
+      <summary>
+            Global action count
+            </summary>
+    </member>
+    <member name="P:ClcScheduler.CentralScheduler.SpaceCount">
+      <summary>
+            Number of spaces
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.SpaceActionsChangeEventArgs.#ctor">
+      <summary>
+            For S+ Compatibility, do not use
+            </summary>
+    </member>
+    <member name="M:ClcScheduler.SpaceActionsChangeEventArgs.#ctor(ClcScheduler.eSpaceActionModified)">
+      <summary>
+            Constructor
+            </summary>
+      <param name="ModifiedActions">
+      </param>
+    </member>
+    <member name="P:ClcScheduler.SpaceActionsChangeEventArgs.ModifiedActions">
+      <summary>
+            Actions modified
+            </summary>
+    </member>
+  </members>
+</doc>

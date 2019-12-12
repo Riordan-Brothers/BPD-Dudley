@@ -1,0 +1,173 @@
+[BEGIN]
+  Version=1
+[END]
+[BEGIN]
+  ObjTp=FSgntr
+  Sgntr=UserSPlus
+  RelVrs=1
+  IntStrVrs=1
+  SPlusVrs=4.04.01
+  CrossCplrVrs=1.3
+[END]
+[BEGIN]
+  ObjTp=Hd
+  Cmn1=The Mobile Pro Project Name Grabber will reach out and grab the||1
+  Cmn2=name of the current Mobile Pro Project that is loaded, so you do||1
+  Cmn3=not need to specify the name manually through a serial\\send or||1
+  Cmn4=a mulitple serial send.\\\\*** Revision History ***\\Version 1.00||1
+  Cmn5=- Initial Release\\\\Version 1.10 - Added the ability to use spaces||1
+  Cmn6=in the search name, previous if you used spaces in the search name||1
+  Cmn7=it would always fail.
+[END]
+[BEGIN]
+  ObjTp=Symbol
+  Exclusions=1,19,20,21,88,89,167,168,179,213,214,215,216,217,225,226,248,249,266,267,310,718,756,854,
+  Exclusions_CDS=5
+  Inclusions_CDS=6
+  Name=Mobile Pro Project Name Grabber v1.10
+  SmplCName=Mobile Pro Project Name Grabber v1.10.usp
+  Code=1
+  SysRev5=4.000
+  SMWRev=3.00.00
+  InputCue1=[~UNUSED~]
+  InputSigType1=Digital
+  InputCue2=[~UNUSED~]
+  InputSigType2=Digital
+  InputCue3=[~UNUSED~]
+  InputSigType3=Digital
+  InputCue4=[~UNUSED~]
+  InputSigType4=Digital
+  InputCue5=Get_Mobile_Project_Name_b
+  InputSigType5=Digital
+  OutputCue1=[~UNUSED~]
+  OutputSigType1=Digital
+  OutputCue2=[~UNUSED~]
+  OutputSigType2=Digital
+  OutputCue3=[~UNUSED~]
+  OutputSigType3=Digital
+  OutputCue4=[~UNUSED~]
+  OutputSigType4=Digital
+  OutputCue5=Get_Mobile_Project_Name_Busy_fb
+  OutputSigType5=Digital
+  OutputList2Cue1=[~UNUSED~]
+  OutputList2SigType1=Serial
+  OutputList2Cue2=Mobile_Project_Name_txt$
+  OutputList2SigType2=Serial
+  ParamCue1=[Reference Name]
+  ParamCue2=DebugMode,0d,1d
+  ParamSigType2=List
+  ParamCue3=ProcessorMode,0d,1d
+  ParamSigType3=List
+  ParamCue4=ProjectLocation$,Internal,External
+  ParamSigType4=List
+  ParamCue5=MatchSegment$
+  ParamSigType5=String
+  MinVariableInputs=5
+  MaxVariableInputs=5
+  MinVariableInputsList2=0
+  MaxVariableInputsList2=0
+  MinVariableOutputs=5
+  MaxVariableOutputs=5
+  MinVariableOutputsList2=2
+  MaxVariableOutputsList2=2
+  MinVariableParams=4
+  MaxVariableParams=4
+  Expand=expand_separately
+  Expand2=expand_separately
+  ProgramTree=Logic
+  SymbolTree=10
+  Hint=
+  PdfHelp=
+  HelpID= 
+  Render=4
+  Smpl-C=16
+  CompilerCode=-48
+  CompilerParamCode=27
+  CompilerParamCode5=14
+  NumFixedParams=1
+  Pp1=1
+  Pp2=2
+  Pp3=3
+  Pp4=4
+  Pp5=5
+  MPp=5
+  NVStorage=10
+  ParamSigType1=String
+  SmplCInputCue1=o#
+  SmplCOutputCue1=i#
+  SmplCInputList2Cue1=an#
+  SmplCOutputList2Cue1=ai#
+  SPlus2CompiledName=S2_Mobile_Pro_Project_Name_Grabber_v1_10
+  SymJam=NonExclusive
+  FileName=Mobile Pro Project Name Grabber v1.10.ush
+  SIMPLPlusModuleEncoding=0
+  clz1=RBI System Helper v1c
+  clz2=RBI Room Helper v1c
+  clz3=RBI Single Zone v5b
+  clz4=RBI GLPP Helper v5b
+[END]
+[BEGIN]
+  ObjTp=Dp
+  H=1
+  Tp=1
+  NoS=False
+[END]
+[BEGIN]
+  ObjTp=Dp
+  H=2
+  Tp=1
+  HD=True
+  DV=0d
+  Sgn=0
+  Lng=False
+  NF=1
+  NoS=True
+  DNF=1
+  VVS=2
+  VN=2
+  Val1=0d
+  Lbl1=Off
+  Val2=1d
+  Lbl2=On
+[END]
+[BEGIN]
+  ObjTp=Dp
+  H=3
+  Tp=1
+  HD=True
+  DV=0d
+  Sgn=0
+  Lng=False
+  NF=1
+  NoS=True
+  DNF=1
+  VVS=2
+  VN=2
+  Val1=0d
+  Lbl1=Standard Processors
+  Val2=1d
+  Lbl2=MPS/DMPS Processors
+[END]
+[BEGIN]
+  ObjTp=Dp
+  H=4
+  Tp=1
+  HD=True
+  DV=Internal
+  NoS=False
+  VVS=2
+  VN=2
+  Val1=Internal
+  Lbl1=Internal Storage
+  Val2=External
+  Lbl2=External Storage
+[END]
+[BEGIN]
+  ObjTp=Dp
+  H=5
+  Tp=1
+  HD=True
+  DV=
+  NoS=False
+  VVS=0
+[END]
