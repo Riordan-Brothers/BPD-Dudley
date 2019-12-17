@@ -133,7 +133,7 @@ public override object FunctionMain (  object __obj__ )
         __context__.SourceCodeLine = 94;
         _SplusNVRAM.WAITTIME = (ushort) ( 100 ) ; 
         __context__.SourceCodeLine = 96;
-        CreateWait ( "__SPLS_TMPVAR__WAITLABEL_55__" , 200 , __SPLS_TMPVAR__WAITLABEL_55___Callback ) ;
+        CreateWait ( "__SPLS_TMPVAR__WAITLABEL_15__" , 200 , __SPLS_TMPVAR__WAITLABEL_15___Callback ) ;
         
         
     }
@@ -142,7 +142,7 @@ public override object FunctionMain (  object __obj__ )
     return __obj__;
     }
     
-public void __SPLS_TMPVAR__WAITLABEL_55___CallbackFn( object stateInfo )
+public void __SPLS_TMPVAR__WAITLABEL_15___CallbackFn( object stateInfo )
 {
 
     try
@@ -190,7 +190,7 @@ public override void LogosSplusInitialize()
     }
     
     LISTCHANGEWAIT_Callback = new WaitFunction( LISTCHANGEWAIT_CallbackFn );
-    __SPLS_TMPVAR__WAITLABEL_55___Callback = new WaitFunction( __SPLS_TMPVAR__WAITLABEL_55___CallbackFn );
+    __SPLS_TMPVAR__WAITLABEL_15___Callback = new WaitFunction( __SPLS_TMPVAR__WAITLABEL_15___CallbackFn );
     
     for( uint i = 0; i < 60; i++ )
         PCSELECT[i+1].OnDigitalPush.Add( new InputChangeHandlerWrapper( PCSELECT_OnPush_0, false ) );
@@ -213,7 +213,7 @@ public UserModuleClass_RBI_PHOTOCELL_LIST_V5B ( string InstanceName, string Refe
 
 
 private WaitFunction LISTCHANGEWAIT_Callback;
-private WaitFunction __SPLS_TMPVAR__WAITLABEL_55___Callback;
+private WaitFunction __SPLS_TMPVAR__WAITLABEL_15___Callback;
 
 
 const uint PCSELECT__DigitalInput__ = 0;

@@ -1,0 +1,29 @@
+<Device Model="DIN-AP3">
+   <Network Type="Cresnet" Id="01">
+      <Device Model="GLS-SIM" DeviceId="03" Name="stairs photocell"/>
+      <Device Model="GLS-SIM" DeviceId="04" Name="fitness photocell"/>
+      <Device Model="GLS-SIM" DeviceId="05" Name="fitness north occ"/>
+      <Device Model="GLS-SIM" DeviceId="06" Name="fitness south occ"/>
+      <Device Model="GLS-SIM" DeviceId="07" Name="mens locker south photocell"/>
+      <Device Model="GLS-SIM" DeviceId="08" Name="mens locker SW photocell"/>
+      <Device Model="GLS-SIM" DeviceId="09" Name="mens locker west photocell"/>
+      <Device Model="GLS-SIM" DeviceId="10" Name="mens locker NE photocell"/>
+      <Device Model="GLS-SIM" DeviceId="11" Name="mens locker north photocell"/>
+      <Device Model="GLS-SIM" DeviceId="12" Name="womens locker north01 photocell"/>
+      <Device Model="GLS-SIM" DeviceId="13" Name="womens locker noth02 photocell"/>
+      <Device Model="GLS-SIM" DeviceId="14" Name="vestibule photocell"/>
+      <Device Model="GLS-SIM" DeviceId="15" Name="main lobby photocell"/>
+      <Device Model="C2N-CB-TS" DeviceId="1A" Name="front desk"/>
+      <Device Model="TPS-4,TPS-4L," DeviceId="2B" Name="booking"/>
+      <Device Model="GLXP-SW16" DeviceId="9A"/>
+      <Device Model="GLXP-SW16" DeviceId="9B"/>
+      <Device Model="GLXP-SW10" DeviceId="9C"/>
+      <Device Model="GLXP-SW16" DeviceId="9D"/>
+      <Device Model="GLXP-SW16" DeviceId="9E"/>
+   </Network>
+   <Network Type="Ethernet" Id="02">
+      <Device Model="TSW-750" DeviceId="03"/>
+      <Device Model="Core3 UI XPanel" DeviceId="10" Name="XPanel 2.0 Smart Graphics"/>
+      <Device Model="Crestron_App" DeviceId="11" Name="Crestron App"/>
+   </Network>
+</Device>
