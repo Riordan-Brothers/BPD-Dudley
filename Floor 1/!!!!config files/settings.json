@@ -1,11 +1,11 @@
 { 
   "PasswordProtected": 0,
   "Lights": 1,
-  "Shades": 1,
-  "Photocells": 1,
+  "Shades": 0,
+  "Photocells": 0,
   "Scheduler": 1,
-  "DMX": 1,
-  "Outlets": 1,	
+  "DMX": 0,
+  "Outlets": 0,	
   "Help": 1,
   "Page01": 0,
   "Page02": 0,
@@ -17,6 +17,6 @@
   "Setting03": 0,
   "Setting04": 0,
   "Setting05": 0,
-  "NumRooms": 33,
-  "NumPCs": 9
+  "NumRooms": 13,
+  "NumPCs": 0
 }
